@@ -24,4 +24,4 @@ I was motivated to build this when I was recently shopping for cars online. I wa
 This will be my first time using Vite, Tailwind CSS, React Query, and PocketBase. I've experimented with React recently, but I will still need to figure out the best patterns for implementing the features above. I will also need to determine how to best connect React Query to PocketBase as I'm not sure if PocketBase can receive API calls directly or if I need to work through Express.
 
 ### Project Tracker
-[Trello board](https://trello.com/invite/b/cZ6ysmel/ATTIaa05652204e801ea51163edec837d8f153B84B26/project-board)
+[Trello board](https://trello.com/b/cZ6ysmel/project-board)
