@@ -13,7 +13,6 @@ I was motivated to build this when I was recently shopping for cars online. I wa
 - Admin: The admin can change a user password (in case they forget) and delete any listing
 
 ### Technologies
-Production
  - Node.js w/ Express.js web server
  - PocketBase for the database backend
  - Vite for React w/ Tailwind CSS for building the frontend
