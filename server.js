@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const staticDir = 'dist'; // relative path
+const custom404 = staticDir + '/404.html';
 const port = 80;
 const app = express();
 
@@ -15,10 +16,15 @@ app.get('/test', function (req, res) {
 
 app.use('/', express.static(path.join(__dirname, staticDir)));
 
+app.use('/500', function (req, res) {
+    const error = new Error('forced error for testing');
+    throw error;
+});
+
 // custom 404
 app.use(function (req, res) {
     res.status(404);
-    res.send('404: Not Found');
+    res.sendFile(path.join(__dirname, custom404));
 });
 
 // custom 500
@@ -26,7 +32,7 @@ app.use(function (error, req, res, next) {
     res.status(500);
     res.send('500: Internal Server Error');
 
-    // console.error(error); // debug
+    console.error(error); // debug
 });
 
 app.listen(port);
