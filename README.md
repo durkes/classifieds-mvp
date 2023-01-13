@@ -25,3 +25,15 @@ This will be my first time using Vite, Tailwind CSS, React Query, and PocketBase
 
 ### Project Tracker
 [Trello board](https://trello.com/b/cZ6ysmel/project-board)
+
+
+## Reminders
+#### CentOS 7 Helpful Commands
+    sudo yum install net-tools -y
+    sudo netstat -an | grep 80 | grep -i listen
+    sudo netstat -an | grep 443 | grep -i listen
+    sudo netstat -an | grep 8090 | grep -i listen
+    sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+    sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
+    sudo firewall-cmd --zone=public --add-port=8090/tcp --permanent
+    sudo firewall-cmd --reload
