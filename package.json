@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "dbms": "./db/pocketbase serve",
+    "dbms": "./dbms/pocketbase serve",
     "start": "node server.js"
   },
   "dependencies": {
