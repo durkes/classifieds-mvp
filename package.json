@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "dbms": "./dbms/pocketbase serve",
-    "start": "node server.js"
+    "server": "node server.js",
+    "start": "npm run build && npm run server"
   },
   "dependencies": {
     "express": "^4.18.2",
