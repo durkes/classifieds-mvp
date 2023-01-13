@@ -1,4 +1,5 @@
 import express from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
 import { fileURLToPath } from 'url';
@@ -10,9 +11,11 @@ const port = 80;
 const app = express();
 
 // https://expressjs.com/en/starter/basic-routing.html
-app.get('/test', function (req, res) {
-    res.send('hello from /test');
-});
+
+// proxy to dbms
+const dbmsTarget = 'http://127.0.0.1:8090';
+app.use('/_/', createProxyMiddleware({ target: dbmsTarget }));
+app.use('/api/', createProxyMiddleware({ target: dbmsTarget }));
 
 app.use('/', express.static(path.join(__dirname, staticDir)));
 

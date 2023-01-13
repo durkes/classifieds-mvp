@@ -11,9 +11,9 @@
 
     <script src="https://cdn.jsdelivr.net/gh/pocketbase/js-sdk@master/dist/pocketbase.umd.js"></script>
     <script type="text/javascript">
-        // const pb = new PocketBase(window.location.protocol + '//' + window.location.hostname + ':8090');
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        const redirectUrl = window.location.protocol + '//' + window.location.host + '/oauth-redirect.html';
+        const serverUrl = window.location.protocol + '//' + window.location.host;
+        const pb = new PocketBase(serverUrl);
+        const redirectUrl = serverUrl + '/oauth-redirect.html';
 
         // parse the query parameters from the redirected url
         const params = (new URL(window.location)).searchParams;
