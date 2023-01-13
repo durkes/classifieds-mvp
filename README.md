@@ -6,7 +6,7 @@ This website will allow users to buy and sell used cars locally. A visitor can s
 I was motivated to build this when I was recently shopping for cars online. I wanted to gain experience building an MVP with key features using React with a SQL backend.
 
 ### Features
-- User login: Users can create an account, log in, and change their password
+- User login: Users can create an account, log in, and change their password (or sign in w/ Google, Twitter)
 - Post ads: Authenticated users can create a listing to sell their car with details and photos. They can delete their listing once sold.
 - Filter/sort: Visitors and users can filter and sort listings by price, year, mileage, and type of vehicle
 - Favorites: Authenticated users can save their favorite listings
@@ -14,7 +14,7 @@ I was motivated to build this when I was recently shopping for cars online. I wa
 
 ### Technologies
  - Node.js w/ Express.js web server
- - PocketBase for the database backend
+ - PocketBase for the database backend and OAuth2
  - Vite for React w/ Tailwind CSS for building the frontend
  - React Query for API calls
  - JavaScirpt, JSX, HTML, CSS, Sass, SQL
