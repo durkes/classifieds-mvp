@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -30,24 +31,24 @@ export default function Navbar() {
     }
 
     const navMenu = [
-        { label: 'View Listings 🔍', href: './' },
-        { label: 'Sell Your Car <span class="text-lg leading-none">🏷️</span>', href: './' },
+        { label: 'View Listings 🔍', href: '/listings' },
+        { label: 'Sell Your Car <span class="text-lg leading-none">🏷️</span>', href: '/listings/new' },
     ];
 
     const userMenu = [
-        { label: 'My Favorites ⭐️', href: './' },
-        { label: 'My Listings', href: './' },
-        { label: 'New Listing <span class="text-lg leading-none">🚗</span>', href: './' },
-        { label: 'Settings 🔧', href: './' },
-        { label: 'Sign out', href: './' },
+        { label: 'My Favorites ⭐️', href: '/listings/saved' },
+        { label: 'My Listings', href: '/listings/mine' },
+        { label: 'New Listing <span class="text-lg leading-none">🚗</span>', href: '/listings/new' },
+        { label: 'Settings 🔧', href: '/account' },
+        { label: 'Sign out', href: '/logout' },
     ];
 
     return (
         <nav className="bg-white border-gray-200 py-2.5 rounded dark:bg-gray-900">
             <div className="container flex flex-wrap items-center justify-between mx-auto">
-                <a href="./" className="flex items-center">
+                <Link to="/" className="flex items-center">
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Classifieds</span>
-                </a>
+                </Link>
                 <div className="flex items-center md:order-2">
                     <button onClick={() => setUserMenuOpen(!userMenuOpen)} type="button" className="flex mr-3 text-sm bg-gray-200 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={userMenuOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
@@ -61,7 +62,7 @@ export default function Navbar() {
                         <ul className="py-1" aria-labelledby="user-menu-button">
                             {userMenu.map((item, i) =>
                                 <li key={i}>
-                                    <a href={item.href} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" dangerouslySetInnerHTML={{ __html: item.label }}></a>
+                                    <Link to={item.href} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" dangerouslySetInnerHTML={{ __html: item.label }}></Link>
                                 </li>
                             )}
                         </ul>
@@ -74,11 +75,11 @@ export default function Navbar() {
                 <div className={`items-center justify-between ${!navMenuOpen ? 'hidden' : ''} w-full md:flex md:w-auto md:order-1`} id="mobile-menu">
                     <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <a href="./" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Current Page</a>
+                            <Link to="/" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Current Page</Link>
                         </li>
                         {navMenu.map((item, i) =>
                             <li key={i}>
-                                <a href={item.href} className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" dangerouslySetInnerHTML={{ __html: item.label }}></a>
+                                <Link to={item.href} className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" dangerouslySetInnerHTML={{ __html: item.label }}></Link>
                             </li>
                         )}
                     </ul>
