@@ -88,6 +88,7 @@ export default function Navbar() {
     );
 }
 
+// https://flowbite.com/docs/components/navbar/#user-menu-dropdown
 function NavMenuLink({ href, label, location }) {
     const currentPage = location.pathname === href;
 
