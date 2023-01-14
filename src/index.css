@@ -1,9 +1,24 @@
+/* custom fonts */
+/* update tailwind.config.cjs for usage */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 /* https://tailwindcss.com/docs/guides/vite */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* custom classes */
+/* https://tailwindcss.com/docs/adding-custom-styles */
+@layer components {
+    .custom-card {
+        background-color: theme('colors.white');
+        border-radius: theme('borderRadius.lg');
+        padding: theme('spacing.6');
+        box-shadow: theme('boxShadow.xl');
+    }
+}
+
+/* utilities override components */
 @layer utilities {
     .content-auto {
         content-visibility: auto;
