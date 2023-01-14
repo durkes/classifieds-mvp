@@ -1,8 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
     const [navMenuOpen, setNavMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const handleAnyClick = () => {
+            // setTimeout to avoid conflict with onClick
+            setTimeout(() => {
+                // close each menu if open 
+                navMenuOpen && setNavMenuOpen(false);
+                userMenuOpen && setUserMenuOpen(false);
+            }, 0);
+        };
+
+        document.addEventListener('click', handleAnyClick, true);
+
+        return () => {
+            // clean up
+            document.removeEventListener('click', handleAnyClick, true);
+        };
+    }, [navMenuOpen, userMenuOpen]); // skip effect if values have not changed
 
     const avatars = ['👱', '👩', '👦', '👧', '👨', '👶', '🙂', '😀', '😃', '😉', '🤖', '👽'];
     const randomAvatar = randomItem(avatars);
