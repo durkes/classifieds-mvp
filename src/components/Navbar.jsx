@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
+    const location = useLocation();
+
     const [navMenuOpen, setNavMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
 
@@ -62,7 +64,7 @@ export default function Navbar() {
                         <ul className="py-1" aria-labelledby="user-menu-button">
                             {userMenu.map((item, i) =>
                                 <li key={i}>
-                                    <Link to={item.href} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" dangerouslySetInnerHTML={{ __html: item.label }}></Link>
+                                    <UserMenuLink href={item.href} label={item.label} location={location} />
                                 </li>
                             )}
                         </ul>
@@ -74,17 +76,40 @@ export default function Navbar() {
                 </div>
                 <div className={`items-center justify-between ${!navMenuOpen ? 'hidden' : ''} w-full md:flex md:w-auto md:order-1`} id="mobile-menu">
                     <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <Link to="/" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Current Page</Link>
-                        </li>
                         {navMenu.map((item, i) =>
                             <li key={i}>
-                                <Link to={item.href} className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" dangerouslySetInnerHTML={{ __html: item.label }}></Link>
+                                <NavMenuLink href={item.href} label={item.label} location={location} />
                             </li>
                         )}
                     </ul>
                 </div>
             </div>
         </nav>
+    );
+}
+
+function NavMenuLink({ href, label, location }) {
+    const currentPage = location.pathname === href;
+
+    let className = 'block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700';
+    if (currentPage) {
+        className = 'block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white';
+    }
+
+    return (
+        <Link to={href} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
+    );
+}
+
+function UserMenuLink({ href, label, location }) {
+    const currentPage = location.pathname === href;
+
+    let className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white';
+    if (currentPage) {
+        className = 'block px-4 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-600 dark:text-white';
+    }
+
+    return (
+        <Link to={href} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
     );
 }
