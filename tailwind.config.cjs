@@ -2,6 +2,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+  darkMode: 'class', // https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
