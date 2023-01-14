@@ -4,11 +4,9 @@ import './App.css';
 
 function App() {
   return (
-    <div>
-      <HashRouter>
-        <BaseLayout />
-      </HashRouter>
-    </div>
+    <HashRouter>
+      <BaseLayout />
+    </HashRouter>
   );
 }
 
