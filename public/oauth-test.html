@@ -17,7 +17,7 @@
     <script type="text/javascript">
         const serverUrl = window.location.protocol + '//' + window.location.host;
         const pb = new PocketBase(serverUrl);
-        const redirectUrl = serverUrl + '/oauth-redirect.html';
+        const redirectUrl = serverUrl + '/oauth-callback.html';
 
         async function loadLinks() {
             const authMethods = await pb.collection('users').listAuthMethods();

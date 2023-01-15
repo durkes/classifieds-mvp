@@ -3,44 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>OAuth2 redirect page</title>
+    <title>Authenticating...</title>
 </head>
 
 <body>
     <pre id="content">Authenticating...</pre>
 
-    <script src="https://cdn.jsdelivr.net/gh/pocketbase/js-sdk@master/dist/pocketbase.umd.js"></script>
     <script type="text/javascript">
-        const serverUrl = window.location.protocol + '//' + window.location.host;
-        const pb = new PocketBase(serverUrl);
-        const redirectUrl = serverUrl + '/oauth-redirect.html';
-
-        // parse the query parameters from the redirected url
-        const params = (new URL(window.location)).searchParams;
-
-        // load the previously stored provider's data
-        const provider = JSON.parse(localStorage.getItem('provider'))
-
-        // compare the redirect's state param and the stored provider's one
-        if (provider.state !== params.get('state')) {
-            throw "State parameters don't match.";
-        }
-
-        // authenticate
-        pb.collection('users').authWithOAuth2(
-            provider.name,
-            params.get('code'),
-            provider.codeVerifier,
-            redirectUrl,
-            // pass optional user create data
-            {
-                emailVisibility: false,
-            }
-        ).then((authData) => {
-            document.getElementById('content').innerText = JSON.stringify(authData, null, 2);
-        }).catch((err) => {
-            document.getElementById('content').innerText = "Failed to exchange code.\n" + err;
-        });
+        const redirectUrl = '/#/login/callback';
+        window.location.replace(redirectUrl + window.location.search);
     </script>
 </body>
 
