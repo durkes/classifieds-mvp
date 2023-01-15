@@ -13,6 +13,10 @@ module.exports = {
         /* import custom fonts in index.css */
         'sans': ['Inter', ...defaultTheme.fontFamily.sans],
       },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+        'spin-fast': 'spin 500ms linear infinite',
+      },
     }
   },
   plugins: [],
