@@ -1,7 +1,7 @@
 export default function MyAccount() {
     return (
         <div>
-            <p>This is the settings page</p>
+            <p>This is the my-account page</p>
         </div>
     );
 }

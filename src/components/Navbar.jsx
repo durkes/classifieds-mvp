@@ -41,7 +41,7 @@ export default function Navbar() {
         { label: 'My Favorites ⭐️', href: '/listings/saved' },
         { label: 'My Listings', href: '/listings/mine' },
         { label: 'New Listing <span class="text-lg leading-none">🚗</span>', href: '/listings/new' },
-        { label: 'Settings 🔧', href: '/user/account' },
+        { label: 'My Account 🔧', href: '/user/account' },
         { label: 'Sign out', href: '/user/logout' },
     ];
 
