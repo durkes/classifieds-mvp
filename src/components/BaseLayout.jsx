@@ -10,15 +10,15 @@ export default function BaseLayout() {
             <Navbar />
             <div className="container mx-auto">
                 <Routes>
-                    <Route exact path={'/'} element={<Home />} />
-                    <Route exact path={'/listings/view'} element={<Listings />} />
-                    <Route exact path={'/listings/new'} element={<NewPost />} />
-                    <Route exact path={'/listings/mine'} element={<MyListings />} />
-                    <Route exact path={'/listings/saved'} element={<MyFavorites />} />
-                    <Route exact path={'/user/account'} element={<MyAccount />} />
-                    <Route exact path={'/user/login'} element={<Login />} />
-                    <Route exact path={'/user/login/callback'} element={<OAuthCallback />} />
-                    <Route exact path={'/user/logout'} element={<Logout />} />
+                    <Route path="/listings/view" element={<Listings />} />
+                    <Route path="/listings/new" element={<NewPost />} />
+                    <Route path="/listings/mine" element={<MyListings />} />
+                    <Route path="/listings/saved" element={<MyFavorites />} />
+                    <Route path="/user/account" element={<MyAccount />} />
+                    <Route path="/user/login" element={<Login />} />
+                    <Route path="/user/login/callback" element={<OAuthCallback />} />
+                    <Route path="/user/logout" element={<Logout />} />
+                    <Route path="*" element={<Home />} />
                 </Routes>
             </div>
         </div>
