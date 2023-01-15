@@ -33,7 +33,7 @@ export default function Navbar() {
     }
 
     const navMenu = [
-        { label: 'View Listings 🔍', href: '/listings' },
+        { label: 'View Listings 🔍', href: '/listings/view' },
         { label: 'Sell Your Car <span class="text-lg leading-none">🏷️</span>', href: '/listings/new' },
     ];
 

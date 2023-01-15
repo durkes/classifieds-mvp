@@ -11,7 +11,7 @@ export default function BaseLayout() {
             <div className="container mx-auto">
                 <Routes>
                     <Route exact path={'/'} element={<Home />} />
-                    <Route exact path={'/listings'} element={<Listings />} />
+                    <Route exact path={'/listings/view'} element={<Listings />} />
                     <Route exact path={'/listings/new'} element={<NewPost />} />
                     <Route exact path={'/listings/mine'} element={<MyListings />} />
                     <Route exact path={'/listings/saved'} element={<MyFavorites />} />

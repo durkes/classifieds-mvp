@@ -28,6 +28,11 @@ export default function server() {
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
 
+    // all react route prefixes
+    app.get(['/listings/*', '/user/*'], function (req, res) {
+        res.sendFile(path.join(__dirname, staticDir, '/index.html'));
+    });
+
     app.use('/500', function (req, res) {
         const error = new Error('forced error for testing');
         throw error;
