@@ -6,15 +6,15 @@ export default router;
 
 router.get('/oauth/twitter', function (req, res, next) {
     const providerName = 'twitter';
-    resOAuthRoute(providerName, req, res, next);
+    resOAuthReq(providerName, req, res, next);
 });
 
 router.get('/oauth/google', function (req, res, next) {
     const providerName = 'google';
-    resOAuthRoute(providerName, req, res, next);
+    resOAuthReq(providerName, req, res, next);
 });
 
-function resOAuthRoute(providerName, req, res, next) {
+function resOAuthReq(providerName, req, res, next) {
     getAuthProvider(providerName, (error, provider) => {
         if (error) {
             return next(error);
