@@ -1,6 +1,7 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import oauthRoutes from './oauth.js';
+import OAuthRoutes from './OAuth.js';
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
 import { fileURLToPath } from 'url';
@@ -15,12 +16,14 @@ export default function server() {
     // https://expressjs.com/en/starter/basic-routing.html
     const app = express();
 
-    // proxy to dbms
-    app.use('/_/', createProxyMiddleware({ target: dbmsTarget }));
-    app.use('/api/', createProxyMiddleware({ target: dbmsTarget }));
+    // proxy to dbms (can be excluded in production with current app design)
+    app.use(['/_/', '/api/'], createProxyMiddleware({ target: dbmsTarget }));
+
+    // middleware
+    app.use(cookieParser());
 
     // oauth login
-    app.use(oauthRoutes);
+    app.use(OAuthRoutes);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
