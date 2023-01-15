@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
-import { MyAccount, Login, OAuthCallback, Logout } from './Account';
+import { MyAccount, Login, OAuthCallback, Logout } from './User';
 import { Listings, MyListings, MyFavorites, NewPost } from './Listings';
 
 export default function BaseLayout() {
@@ -15,10 +15,10 @@ export default function BaseLayout() {
                     <Route exact path={'/listings/new'} element={<NewPost />} />
                     <Route exact path={'/listings/mine'} element={<MyListings />} />
                     <Route exact path={'/listings/saved'} element={<MyFavorites />} />
-                    <Route exact path={'/account'} element={<MyAccount />} />
-                    <Route exact path={'/login'} element={<Login />} />
-                    <Route exact path={'/login/callback'} element={<OAuthCallback />} />
-                    <Route exact path={'/logout'} element={<Logout />} />
+                    <Route exact path={'/user/account'} element={<MyAccount />} />
+                    <Route exact path={'/user/login'} element={<Login />} />
+                    <Route exact path={'/user/login/callback'} element={<OAuthCallback />} />
+                    <Route exact path={'/user/logout'} element={<Logout />} />
                 </Routes>
             </div>
         </div>

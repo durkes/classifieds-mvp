@@ -8,8 +8,8 @@ export default function Login() {
     // get links from /oauth-test.html
     // TODO need to get these from react query which will get them from PBDB
     // TODO stor the state in localstorage when onclick on a provider
-    const twitterUrl = '/login/oauth/twitter?redirect_uri=' + redirectUrl;
-    const googleUrl = '/login/oauth/google?redirect_uri=' + redirectUrl;
+    const twitterUrl = '/oauth/twitter?redirect_uri=' + redirectUrl;
+    const googleUrl = '/oauth/google?redirect_uri=' + redirectUrl;
 
     return (
         <div class="z-60 fixed top-0 left-0 overflow-auto grid h-screen w-screen place-items-center bg-slate-800 px-4 text-sm font-medium">
