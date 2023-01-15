@@ -1,28 +1,12 @@
 import PocketBase from 'pocketbase';
-// fetch() polyfill for node < v17
-import fetch, {
-    Blob,
-    blobFrom,
-    blobFromSync,
-    File,
-    fileFrom,
-    fileFromSync,
-    FormData,
-    Headers,
-    Request,
-    Response,
-} from 'node-fetch';
+import './fetch-polyfill.js';
 
-/*global globalThis*/
-if (!globalThis.fetch) {
-    globalThis.fetch = fetch;
-    globalThis.Headers = Headers;
-    globalThis.Request = Request;
-    globalThis.Response = Response;
-}
+// store these credentials using a secure method in production
+const dbmsUser = 'admin@example.com';
+const dbmsPass = dbmsUser;
 
 const pb = new PocketBase('http://127.0.0.1:8090');
+const adminData = await pb.admins.authWithPassword(dbmsUser, dbmsPass);
+console.debug(adminData); // do not expose token in production
 
-const result = await pb.collection('users').getList(1, 20, {
-});
-console.log(result);
+export default pb;
