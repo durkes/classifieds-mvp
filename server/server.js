@@ -1,7 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import OAuthRoutes from './OAuth.js';
+import OAuthReq from './OAuthReq.js';
+import OAuthGrant from './OAuthGrant.js';
+
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
 import { fileURLToPath } from 'url';
@@ -21,19 +23,20 @@ export default function server() {
 
     // middleware
     app.use(cookieParser());
+    app.use(express.json()); // parse incoming POST JSON data
 
-    // oauth login
-    app.use(OAuthRoutes);
+    // route imports
+    app.use([OAuthReq, OAuthGrant]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
 
-    // all react route prefixes
+    // react route prefixes
     app.get(['/listings/*', '/user/*'], function (req, res) {
         res.sendFile(path.join(__dirname, staticDir, '/index.html'));
     });
 
-    app.use('/500', function (req, res) {
+    app.get('/500', function (req, res) {
         const error = new Error('forced error for testing');
         throw error;
     });
@@ -52,5 +55,7 @@ export default function server() {
         console.error(error); // debug
     });
 
-    return app.listen(port);
+    app.listen(port, () => {
+        console.log(`Server running at http://127.0.0.1:${port}/`);
+    });
 }
