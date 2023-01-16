@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import axios from 'axios';
+import fetchHelper from '../../assets/fetch-helper';
+import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
@@ -12,9 +14,10 @@ export default function Login() {
     const twitterUrl = '/v1/login/oauth/twitter?redirect_uri=' + redirectUrl;
     const googleUrl = '/v1/login/oauth/google?redirect_uri=' + redirectUrl;
 
-    const [userEmail, setUserEmail] = useState('');
+    const _userEmail = getCookie('userEmail');
+    const [userEmail, setUserEmail] = useState(_userEmail);
     const checkUser = useMutation(() => {
-        return axios.post('/v1/login/email', { username: userEmail });
+        return fetchHelper('post', '/v1/login/email', { username: userEmail });
     });
 
     function handleSubmit(e) {
@@ -23,8 +26,13 @@ export default function Login() {
     }
 
     if (checkUser.isSuccess) {
+        if (checkUser.data.found) {
+            return <Navigate to="/user/login/email" />;
+        }
+        return <Navigate to="/user/create" />;
     }
     if (checkUser.isError) {
+        alert('Something went wrong. Please try again later.');
     }
 
     return (<>
@@ -70,25 +78,4 @@ export default function Login() {
             </div >
         </div >
     </>);
-}
-
-function NewUser() {
-    return (
-        <div className="z-40 fixed top-0 left-0 overflow-auto grid h-screen w-screen place-items-center bg-slate-800 px-4 text-sm font-medium">
-            <div className="w-full max-w-sm rounded-lg bg-slate-700/30 shadow">
-                <form className="p-4 md:p-5 lg:p-6">
-                    <div className="mb-4 text-center text-slate-500">Let's create an account for you! <span className="text-xl leading-none">🖐️</span></div>
-
-                    <div className="grid gap-y-3">
-                        <input type="email" required value="email@example.com" className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400" />
-                        <input type="password" required placeholder="Password" className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400" />
-                        <input type="password" required placeholder="Password (again)" className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400" />
-                        <button className="flex items-center justify-center gap-x-2 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-300 transition hover:text-purple-400">
-                            Create Account
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
 }

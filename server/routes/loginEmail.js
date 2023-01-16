@@ -13,9 +13,13 @@ router.post('/v1/login/email', function (req, res, next) {
 
         return res.status(error.code).json({ error: error });
     }
+
     if (!req.body.password) {
         // check if user exists
-        return res.json({ found: true }); // proceed to login
+        res.cookie('userEmail', req.body.username);
+        // return res.json({ found: true }); // proceed to login
         return res.json({ found: false }); // prompt to create account
     }
+
+    res.json({});
 });
