@@ -33,7 +33,7 @@ export default function OAuthCallback() {
 }
 
 async function confirmOAuth(payload) {
-    const url = '/oauth/confirm';
+    const url = '/v1/login/oauth';
     const result = await axios.post(url, payload);
     return result.data;
 }

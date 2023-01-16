@@ -3,19 +3,18 @@ import { useMutation } from 'react-query';
 import axios from 'axios';
 import LoadingOverlay from '../LoadingOverlay';
 
-
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
 // https://icons.getbootstrap.com/icons/twitter/
 
 export default function Login() {
     const serverUrl = window.location.protocol + '//' + window.location.host;
     const redirectUrl = serverUrl + '/oauth-redirect.html';
-    const twitterUrl = '/oauth/twitter?redirect_uri=' + redirectUrl;
-    const googleUrl = '/oauth/google?redirect_uri=' + redirectUrl;
+    const twitterUrl = '/v1/login/oauth/twitter?redirect_uri=' + redirectUrl;
+    const googleUrl = '/v1/login/oauth/google?redirect_uri=' + redirectUrl;
 
     const [userEmail, setUserEmail] = useState('');
     const checkUser = useMutation(() => {
-        return axios.post('/auth/login', { username: userEmail });
+        return axios.post('/v1/login/email', { username: userEmail });
     });
 
     function handleSubmit(e) {

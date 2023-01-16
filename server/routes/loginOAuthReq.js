@@ -1,15 +1,15 @@
 import express from 'express';
-import pb from './dbms.config.js';
+import pb from '../utils/dbms.js';
 
 const router = express.Router();
 export default router;
 
-router.get('/oauth/twitter', function (req, res, next) {
+router.get('/v1/login/oauth/twitter', function (req, res, next) {
     const providerName = 'twitter';
     resOAuthReq(providerName, req, res, next);
 });
 
-router.get('/oauth/google', function (req, res, next) {
+router.get('/v1/login/oauth/google', function (req, res, next) {
     const providerName = 'google';
     resOAuthReq(providerName, req, res, next);
 });

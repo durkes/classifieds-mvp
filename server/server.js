@@ -1,10 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import OAuthReq from './OAuthReq.js';
-import OAuthGate from './OAuthGate.js';
-import authGate from './authGate.js';
-import userCRUD from './userCRUD.js';
+import loginOAuth from './routes/loginOAuth.js';
+import loginEmail from './routes/loginEmail.js';
+import userMutate from './routes/userMutate.js';
 
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
@@ -28,8 +27,8 @@ export default function server() {
     app.use(express.json()); // parse incoming POST JSON data
 
     // route imports
-    app.use([OAuthReq, OAuthGate]);
-    app.use([authGate, userCRUD]);
+    app.use([loginOAuth, loginEmail]);
+    app.use([userMutate]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
@@ -40,7 +39,7 @@ export default function server() {
     });
 
     app.get('/500', function (req, res) {
-        const error = new Error('forced error for testing');
+        const error = new Error('Forced error for testing');
         throw error;
     });
 

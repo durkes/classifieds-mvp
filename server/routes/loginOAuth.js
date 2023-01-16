@@ -1,10 +1,14 @@
 import express from 'express';
-import pb from './dbms.config.js';
+import pb from '../utils/dbms.js';
+import loginOAuthReq from './loginOAuthReq.js';
 
 const router = express.Router();
 export default router;
 
-router.post('/oauth/confirm', function (req, res, next) {
+router.use(loginOAuthReq); // set state and get codeVerifier; redirect to provider login
+
+// confirm credentials from provider
+router.post('/v1/login/oauth', function (req, res, next) {
     if (req.body.state !== req.cookies.OAuthState) {
         const error = {
             code: 401,
