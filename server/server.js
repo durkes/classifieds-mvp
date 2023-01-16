@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import OAuthReq from './OAuthReq.js';
 import OAuthGate from './OAuthGate.js';
+import authGate from './authGate.js';
+import userCRUD from './userCRUD.js';
 
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
@@ -27,6 +29,7 @@ export default function server() {
 
     // route imports
     app.use([OAuthReq, OAuthGate]);
+    app.use([authGate, userCRUD]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
