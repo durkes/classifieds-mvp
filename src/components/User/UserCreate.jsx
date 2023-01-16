@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
+import { Navigate } from 'react-router-dom';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
@@ -8,10 +9,11 @@ import LoadingOverlay from '../LoadingOverlay';
 // https://icons.getbootstrap.com/icons/twitter/
 
 export default function LoginEmail() {
-    const _userEmail = getCookie('userEmail');
-    const [userEmail, setUserEmail] = useState(_userEmail);
+    const loginReferrer = getCookie('loginReferrer') || '/';
+    const userEmail = getCookie('userEmail');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+
     const createUser = useMutation(() => {
         return fetchHelper('post', '/v1/user/create', { username: userEmail, password: password });
     });
@@ -26,11 +28,19 @@ export default function LoginEmail() {
         createUser.mutate();
     }
 
+    useEffect(() => {
+        if (createUser.isError) {
+            if (createUser?.error?.response?.data?.error?.data?.email?.code === 'validation_is_email') {
+                alert('Please use a valid email address.');
+            }
+            else {
+                alert('Something went wrong. Please try again later.');
+            }
+        }
+    }, [createUser.isError]);
+
     if (createUser.isSuccess) {
-        alert(JSON.stringify(createUser));
-    }
-    if (createUser.isError) {
-        alert('Something went wrong. Please try again later.');
+        return <Navigate replace to={loginReferrer} />;
     }
 
     return (<>
