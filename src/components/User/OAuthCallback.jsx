@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import LoadingOverlay from '../LoadingOverlay';
@@ -13,12 +14,8 @@ export default function OAuthCallback() {
         return <span>Error: {error.message}</span>;
     }
 
-    return (
-        <div>
-            OAuth Callback: {JSON.stringify(data)}<br />
-            Params: {JSON.stringify(reqQuery)}
-        </div>
-    );
+    // success
+    return <Navigate replace to="/" />;
 }
 
 async function confirmOAuth(payload) {
