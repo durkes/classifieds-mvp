@@ -10,7 +10,7 @@ export default function OAuthCallback() {
     const queryClient = useQueryClient();
     const queryKey = 'OAuthGate';
 
-    const { isSuccess, isError, data, error, refetch } = useQuery(queryKey, () =>
+    const { isSuccess, isError, /*data, error,*/ refetch } = useQuery(queryKey, () =>
         confirmOAuth({ state: reqQuery.state, code: reqQuery.code }), { enabled: false });
 
     useEffect(() => {
@@ -23,9 +23,8 @@ export default function OAuthCallback() {
     }, [refetch, queryClient]); // dependencies[] to prevent useEffect from firing every render
 
     if (isError) {
-        return <span>Error: {error.message}</span>;
+        return <Navigate replace to="/user/login" />;
     }
-
     if (isSuccess) {
         return <Navigate replace to="/" />;
     }
