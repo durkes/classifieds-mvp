@@ -1,21 +1,36 @@
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function OAuthCallback() {
     const reqQuery = Object.fromEntries(new URLSearchParams(window.location.search));
-    const { isLoading, isError, data, error } = useQuery('OAuth', () => confirmOAuth({ state: reqQuery.state, code: reqQuery.code }));
 
-    if (isLoading) {
-        return <LoadingOverlay />;
-    }
+    const queryClient = useQueryClient();
+    const queryKey = 'OAuthGate';
+
+    const { isSuccess, isError, data, error, refetch } = useQuery(queryKey, () =>
+        confirmOAuth({ state: reqQuery.state, code: reqQuery.code }), { enabled: false });
+
+    useEffect(() => {
+        // useQuery {enabled: false} (above) disables automatic re/fetch (to prevent infinite loop w/ removeQueries)
+        refetch(); // call refetch only once by passing dependencies[] to useEffect (below) that will not change
+
+        return function onUnmount() {
+            queryClient.removeQueries(queryKey, { exact: true }); // remove the query cache on unmount
+        };
+    }, [refetch, queryClient]); // dependencies[] to prevent useEffect from firing every render
+
     if (isError) {
         return <span>Error: {error.message}</span>;
     }
 
-    // success
-    return <Navigate replace to="/" />;
+    if (isSuccess) {
+        return <Navigate replace to="/" />;
+    }
+
+    return <LoadingOverlay />;
 }
 
 async function confirmOAuth(payload) {
