@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
+import { Navigate } from 'react-router-dom';
 import fetchHelper from '../../assets/fetch-helper';
+import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function OAuthCallback() {
+    const loginReferrer = getCookie('loginReferrer') || '/';
     const reqQuery = Object.fromEntries(new URLSearchParams(window.location.search));
 
     const queryClient = useQueryClient();
@@ -26,7 +28,7 @@ export default function OAuthCallback() {
         return <Navigate replace to="/user/login" />;
     }
     if (isSuccess) {
-        return <Navigate replace to="/" />;
+        return <Navigate replace to={loginReferrer} />;
     }
 
     return <LoadingOverlay />;

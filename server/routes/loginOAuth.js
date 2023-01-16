@@ -29,13 +29,13 @@ router.post('/v1/login/oauth', function (req, res, next) {
             emailVisibility: false,
         }
     ).then((authData) => {
-        console.log(authData);
         res.json({});
     }).catch((error) => {
         if (error.status === 400) {
             return res.status(error.status).json({ error: error.data });
         }
 
+        // unsexpected error
         next(error);
     });
 });

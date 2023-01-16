@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
-import { getCookie } from '../../assets/browser-cookies';
+import { getCookie, setCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
@@ -14,8 +14,10 @@ export default function Login() {
     const twitterUrl = '/v1/login/oauth/twitter?redirect_uri=' + redirectUrl;
     const googleUrl = '/v1/login/oauth/google?redirect_uri=' + redirectUrl;
 
+    setCookie('loginReferrer', document.referrer.replace(/^[^:]+:\/\/[^/]+/, '').replace(/#.*/, ''), 1); // store the referrer path
     const _userEmail = getCookie('userEmail');
     const [userEmail, setUserEmail] = useState(_userEmail);
+
     const checkUser = useMutation(() => {
         return fetchHelper('post', '/v1/login/email', { username: userEmail });
     });
@@ -25,14 +27,17 @@ export default function Login() {
         checkUser.mutate();
     }
 
+    useEffect(() => {
+        if (checkUser.isError) {
+            alert('Something went wrong. Please try again later.');
+        }
+    }, [checkUser.isError]);
+
     if (checkUser.isSuccess) {
         if (checkUser.data.found) {
             return <Navigate to="/user/login/email" />;
         }
         return <Navigate to="/user/create" />;
-    }
-    if (checkUser.isError) {
-        alert('Something went wrong. Please try again later.');
     }
 
     return (<>

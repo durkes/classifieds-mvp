@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
+import { Navigate } from 'react-router-dom';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
@@ -8,9 +9,10 @@ import LoadingOverlay from '../LoadingOverlay';
 // https://icons.getbootstrap.com/icons/twitter/
 
 export default function LoginEmail() {
-    const _userEmail = getCookie('userEmail');
-    const [userEmail, setUserEmail] = useState(_userEmail);
+    const loginReferrer = getCookie('loginReferrer') || '/';
+    const userEmail = getCookie('userEmail');
     const [password, setPassword] = useState('');
+
     const checkLogin = useMutation(() => {
         return fetchHelper('post', '/v1/login/email', { username: userEmail, password: password });
     });
@@ -20,11 +22,19 @@ export default function LoginEmail() {
         checkLogin.mutate();
     }
 
+    useEffect(() => {
+        if (checkLogin.isError) {
+            if (checkLogin?.error?.response?.status === 400) {
+                alert('Unable to authenticate. Please check your entries and try again.');
+            }
+            else {
+                alert('Something went wrong. Please try again later.');
+            }
+        }
+    }, [checkLogin.isError]);
+
     if (checkLogin.isSuccess) {
-        alert(JSON.stringify(checkLogin));
-    }
-    if (checkLogin.isError) {
-        alert('Something went wrong. Please try again later.');
+        return <Navigate replace to={loginReferrer} />;
     }
 
     return (<>
