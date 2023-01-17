@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie, setCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
+import SessionContext from '../../context/SessionContext';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
 // https://icons.getbootstrap.com/icons/twitter/
@@ -17,6 +18,7 @@ export default function Login() {
     setCookie('loginReferrer', document.referrer.replace(/^[^:]+:\/\/[^/]+/, '').replace(/#.*/, ''), 1); // store the referrer path
     const _userEmail = getCookie('userEmail');
     const [userEmail, setUserEmail] = useState(_userEmail);
+    const { sessionData, setSessionData } = useContext(SessionContext);
 
     const checkUser = useMutation(() => {
         return fetchHelper('post', '/v1/login/email', { username: userEmail });
@@ -32,6 +34,15 @@ export default function Login() {
             alert('Something went wrong. Please try again later.');
         }
     }, [checkUser.isError]);
+
+    useEffect(() => {
+        // will fire once on mount and then again on success to update
+        setSessionData({
+            ...sessionData,
+            isLoggedIn: getCookie('isLoggedIn'),
+            userEmail: getCookie('userEmail')
+        });
+    }, [checkUser.isSuccess]);
 
     if (checkUser.isSuccess) {
         if (checkUser.data.found) {

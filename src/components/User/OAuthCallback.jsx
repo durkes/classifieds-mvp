@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { Navigate } from 'react-router-dom';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
+import SessionContext from '../../context/SessionContext';
 
 export default function OAuthCallback() {
     const loginReferrer = getCookie('loginReferrer') || '/';
     const reqQuery = Object.fromEntries(new URLSearchParams(window.location.search));
+    const { sessionData, setSessionData } = useContext(SessionContext);
 
     const queryClient = useQueryClient();
     const queryKey = 'OAuthGate';
@@ -23,6 +25,16 @@ export default function OAuthCallback() {
             queryClient.removeQueries(queryKey, { exact: true }); // remove the query cache on unmount
         };
     }, [refetch, queryClient]); // dependencies[] to prevent useEffect from firing every render
+
+    useEffect(() => {
+        if (isSuccess) {
+            setSessionData({
+                ...sessionData,
+                isLoggedIn: getCookie('isLoggedIn'),
+                userEmail: getCookie('userEmail')
+            });
+        }
+    }, [isSuccess]);
 
     if (isError) {
         return <Navigate replace to="/user/login" />;

@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useMutation } from 'react-query';
 import { Navigate } from 'react-router-dom';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
+import SessionContext from '../../context/SessionContext';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
 // https://icons.getbootstrap.com/icons/twitter/
@@ -12,6 +13,7 @@ export default function LoginEmail() {
     const loginReferrer = getCookie('loginReferrer') || '/';
     const userEmail = getCookie('userEmail');
     const [password, setPassword] = useState('');
+    const { sessionData, setSessionData } = useContext(SessionContext);
 
     const checkLogin = useMutation(() => {
         return fetchHelper('post', '/v1/login/email', { username: userEmail, password: password });
@@ -32,6 +34,16 @@ export default function LoginEmail() {
             }
         }
     }, [checkLogin.isError]);
+
+    useEffect(() => {
+        if (checkLogin.isSuccess) {
+            setSessionData({
+                ...sessionData,
+                isLoggedIn: getCookie('isLoggedIn'),
+                userEmail: getCookie('userEmail')
+            });
+        }
+    }, [checkLogin.isSuccess]);
 
     if (checkLogin.isSuccess) {
         return <Navigate replace to={loginReferrer} />;
