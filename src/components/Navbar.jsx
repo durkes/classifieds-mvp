@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SessionContext from '../context/SessionContext';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { setCookie } from '../assets/browser-cookies';
 
 export default function Navbar() {
     const location = useLocation();
@@ -33,7 +34,9 @@ export default function Navbar() {
             setUserMenuOpen(!userMenuOpen);
         }
         else {
-            navigate('/user/login');
+            const loginReferrer = location.pathname + location.search + location.hash;
+            setCookie('loginReferrer', loginReferrer, 1);
+            navigate('/user/login', { replace: false });
         }
     }
 
@@ -76,7 +79,7 @@ export default function Navbar() {
                         <ul className="py-1" aria-labelledby="user-menu-button">
                             {userMenu.map((item, i) =>
                                 <li key={i}>
-                                    <UserMenuLink href={item.href} label={item.label} location={location} />
+                                    <UserMenuLink to={item.href} label={item.label} location={location} />
                                 </li>
                             )}
                         </ul>
@@ -90,7 +93,7 @@ export default function Navbar() {
                     <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         {navMenu.map((item, i) =>
                             <li key={i}>
-                                <NavMenuLink href={item.href} label={item.label} location={location} />
+                                <NavMenuLink to={item.href} label={item.label} location={location} />
                             </li>
                         )}
                     </ul>
@@ -101,8 +104,8 @@ export default function Navbar() {
 }
 
 // https://flowbite.com/docs/components/navbar/#user-menu-dropdown
-function NavMenuLink({ href, label, location }) {
-    const currentPage = location.pathname === href;
+function NavMenuLink({ to, label, location }) {
+    const currentPage = location.pathname === to;
 
     let className = 'block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700';
     if (currentPage) {
@@ -110,12 +113,12 @@ function NavMenuLink({ href, label, location }) {
     }
 
     return (
-        <Link to={href} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
+        <Link to={to} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
     );
 }
 
-function UserMenuLink({ href, label, location }) {
-    const currentPage = location.pathname === href;
+function UserMenuLink({ to, label, location }) {
+    const currentPage = location.pathname === to;
 
     let className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white';
     if (currentPage) {
@@ -123,6 +126,6 @@ function UserMenuLink({ href, label, location }) {
     }
 
     return (
-        <Link to={href} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
+        <Link to={to} className={className} aria-current={currentPage && 'page'} dangerouslySetInnerHTML={{ __html: label }} />
     );
 }
