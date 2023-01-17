@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SessionContext from '../context/SessionContext';
 
 export default function Navbar() {
     const location = useLocation();
 
+    const { sessionData } = useContext(SessionContext);
     const [navMenuOpen, setNavMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
 
@@ -24,6 +26,16 @@ export default function Navbar() {
             document.removeEventListener('click', handleAnyClick, true);
         };
     }, [navMenuOpen, userMenuOpen]); // skip effect if values have not changed
+
+    const navigate = useNavigate();
+    function handleUserMenuClick() {
+        if (sessionData.isLoggedIn) {
+            setUserMenuOpen(!userMenuOpen);
+        }
+        else {
+            navigate('/user/login');
+        }
+    }
 
     const avatars = ['👱', '👩', '👦', '👧', '👨', '👶', '🙂', '😀', '😃', '😉', '🤖', '👽'];
     const randomAvatar = randomItem(avatars);
@@ -52,14 +64,14 @@ export default function Navbar() {
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Classifieds</span>
                 </Link>
                 <div className="flex items-center md:order-2">
-                    <button onClick={() => setUserMenuOpen(!userMenuOpen)} type="button" className="flex mr-3 text-sm bg-gray-200 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={userMenuOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                    <button onClick={handleUserMenuClick} type="button" className="flex mr-3 text-sm bg-gray-200 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={userMenuOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
                         <span className="text-3xl">{randomAvatar}</span>
                     </button>
                     <div className={`z-20 absolute top-12 right-1 ${!userMenuOpen ? 'hidden' : ''} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown">
                         <div className="px-4 py-3">
                             <span className="block text-sm text-gray-900 dark:text-white">{/*Real Name*/}</span>
-                            <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">email@address.com</span>
+                            <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{sessionData.userEmail}</span>
                         </div>
                         <ul className="py-1" aria-labelledby="user-menu-button">
                             {userMenu.map((item, i) =>
