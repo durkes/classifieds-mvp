@@ -1,10 +1,10 @@
 import { useEffect, useContext } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
-import SessionContext from '../../context/SessionContext';
 
 export default function OAuthCallback() {
     const loginReferrer = getCookie('loginReferrer') || '/';
