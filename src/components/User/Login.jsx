@@ -3,7 +3,7 @@ import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
-import { getCookie, setCookie } from '../../assets/browser-cookies';
+import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page
@@ -14,11 +14,6 @@ export default function Login() {
     const redirectUrl = serverUrl + '/oauth-redirect.html';
     const twitterUrl = '/v1/login/oauth/twitter?redirect_uri=' + redirectUrl;
     const googleUrl = '/v1/login/oauth/google?redirect_uri=' + redirectUrl;
-
-    const referrerPath = document.referrer.replace(/^[^:]+:\/\/[^/]+/, '').replace(/#.*/, '');
-    if (referrerPath) {
-        setCookie('loginReferrer', referrerPath, 1);
-    } // else if blank, assume cookie was set onClick to login route
 
     const _userEmail = getCookie('userEmail');
     const [userEmail, setUserEmail] = useState(_userEmail);
