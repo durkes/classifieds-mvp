@@ -70,6 +70,9 @@ function getUserData(username, callback) {
 }
 
 function authWithPassword(username, password, callback) {
+    // must clear session with current app design to avoid linking OAuth to existing user session, user conflicts, etc.
+    pbUser.authStore.clear();
+
     // username pararm can be username or email for authWithPassword
     pbUser.collection('users').authWithPassword(username, password).then((authData) => {
         callback(null, authData);

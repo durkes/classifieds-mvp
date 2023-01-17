@@ -30,6 +30,9 @@ router.post('/v1/login/oauth', function (req, res, next) {
             emailVisibility: false,
         }
     ).then((authData) => {
+        // must clear session with current app design to avoid linking OAuth to existing user session, user conflicts, etc.
+        pbUser.authStore.clear();
+
         // success
         sessionCreate({ username: authData.record.username, email: authData.record.email }, res, (error, res) => {
             // clean up cookies
