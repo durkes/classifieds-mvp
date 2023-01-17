@@ -1,6 +1,7 @@
 import express from 'express';
 import pb from '../utils/dbms.js';
 import loginOAuthReq from './loginOAuthReq.js';
+import { jwtSign } from '../utils/jwt.js';
 
 const router = express.Router();
 export default router;
@@ -32,6 +33,18 @@ router.post('/v1/login/oauth', function (req, res, next) {
         // success
         res.cookie('userEmail', authData.record.email || authData.record.username);
         res.cookie('isLoggedIn', 1);
+        res.cookie('userToken', jwtSign({ username: authData.username, email: authData.email }),
+            {
+                httpOnly: true,
+                // secure: true, // true in production
+            });
+
+        // clean up cookies
+        res.clearCookie('OAuthName');
+        res.clearCookie('OAuthState');
+        res.clearCookie('OAuthCodeVerifier');
+        res.clearCookie('OAuthRedirectUri');
+
         res.json({});
     }).catch((error) => {
         if (error.status === 400) {

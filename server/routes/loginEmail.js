@@ -1,5 +1,6 @@
 import express from 'express';
 import pb from '../utils/dbms.js';
+import { jwtSign } from '../utils/jwt.js';
 
 const router = express.Router();
 export default router;
@@ -7,6 +8,7 @@ export default router;
 router.get('/v1/logout', function (req, res, next) {
     res.clearCookie('userEmail');
     res.clearCookie('isLoggedIn');
+    res.clearCookie('userToken');
     res.json({});
 });
 
@@ -23,6 +25,8 @@ router.post('/v1/login/email', function (req, res, next) {
 
     if (!req.body.password) {
         res.cookie('userEmail', req.body.username);
+        res.clearCookie('isLoggedIn');
+        res.clearCookie('userToken');
 
         getUserData(req.body.username, (error, userData) => {
             if (error) {
@@ -51,6 +55,11 @@ router.post('/v1/login/email', function (req, res, next) {
 
             // success
             res.cookie('isLoggedIn', 1);
+            res.cookie('userToken', jwtSign({ username: authData.username, email: authData.email }),
+                {
+                    httpOnly: true,
+                    // secure: true, // true in production
+                });
             res.json({});
         });
     }
