@@ -1,5 +1,5 @@
 import express from 'express';
-import pb from '../utils/dbms.js';
+import { pbAdmin, pbUser } from '../utils/dbms.js';
 import { jwtSign } from '../utils/jwt.js';
 
 const router = express.Router();
@@ -66,7 +66,7 @@ router.post('/v1/login/email', function (req, res, next) {
 });
 
 function getUserData(username, callback) {
-    pb.collection('users').getFirstListItem(`(username='${username}' || email='${username}')`).then((userData) => {
+    pbAdmin.collection('users').getFirstListItem(`(username='${username}' || email='${username}')`).then((userData) => {
         callback(null, userData);
     }).catch((error) => {
         callback(error, null);
@@ -75,7 +75,7 @@ function getUserData(username, callback) {
 
 function authWithPassword(username, password, callback) {
     // username pararm can be username or email for authWithPassword
-    pb.collection('users').authWithPassword(username, password).then((authData) => {
+    pbUser.collection('users').authWithPassword(username, password).then((authData) => {
         callback(null, authData);
     }).catch((error) => {
         callback(error, null);

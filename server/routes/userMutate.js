@@ -1,5 +1,5 @@
 import express from 'express';
-import pb from '../utils/dbms.js';
+import { pbAdmin } from '../utils/dbms.js';
 
 const router = express.Router();
 export default router;
@@ -33,7 +33,7 @@ function createUser(username, password, callback) {
         passwordConfirm: password
     };
 
-    pb.collection('users').create(data).then((response) => {
+    pbAdmin.collection('users').create(data).then((response) => {
         callback(null, response);
     }).catch((error) => {
         callback(error, null);

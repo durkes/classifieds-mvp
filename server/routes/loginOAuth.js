@@ -1,7 +1,7 @@
 import express from 'express';
-import pb from '../utils/dbms.js';
-import loginOAuthReq from './loginOAuthReq.js';
+import { pbUser } from '../utils/dbms.js';
 import { jwtSign } from '../utils/jwt.js';
+import loginOAuthReq from './loginOAuthReq.js';
 
 const router = express.Router();
 export default router;
@@ -19,7 +19,7 @@ router.post('/v1/login/oauth', function (req, res, next) {
         return res.status(error.code).json({ error: error });
     }
 
-    pb.collection('users').authWithOAuth2(
+    pbUser.collection('users').authWithOAuth2(
         req.cookies.OAuthName,
         req.body.code,
         req.cookies.OAuthCodeVerifier,

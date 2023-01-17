@@ -1,5 +1,5 @@
 import express from 'express';
-import pb from '../utils/dbms.js';
+import { pbUser } from '../utils/dbms.js';
 
 const router = express.Router();
 export default router;
@@ -30,7 +30,7 @@ function resOAuthReq(providerName, req, res, next) {
 }
 
 function getAuthProvider(providerName, callback) {
-    pb.collection('users').listAuthMethods().then((authMethods) => {
+    pbUser.collection('users').listAuthMethods().then((authMethods) => {
         let provider;
 
         for (const _provider of authMethods.authProviders) {
