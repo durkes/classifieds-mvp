@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { useState, useEffect, useContext } from 'react';
+import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
 import { getCookie } from '../../assets/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
@@ -13,6 +14,7 @@ export default function LoginEmail() {
     const userEmail = getCookie('userEmail');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    const { sessionData, setSessionData } = useContext(SessionContext);
 
     const createUser = useMutation(() => {
         return fetchHelper('post', '/v1/user/create', { username: userEmail, password: password });
@@ -38,6 +40,16 @@ export default function LoginEmail() {
             }
         }
     }, [createUser.isError]);
+
+    useEffect(() => {
+        if (createUser.isSuccess) {
+            setSessionData({
+                ...sessionData,
+                isLoggedIn: getCookie('isLoggedIn'),
+                userEmail: getCookie('userEmail')
+            });
+        }
+    }, [createUser.isSuccess]);
 
     if (createUser.isSuccess) {
         return <Navigate replace to={loginReferrer} />;
