@@ -1,11 +1,12 @@
 import express from 'express';
 import { pbAdmin } from '../utils/dbms.js';
+import { sessionCreate } from '../utils/session-jwt.js';
 
 const router = express.Router();
 export default router;
 
 router.post('/v1/user/create', function (req, res, next) {
-    createUser(req.body.username, req.body.password, (error, response) => {
+    createUser(req.body.username, req.body.password, (error, record) => {
         if (error) {
             if (error.status === 400) {
                 return res.status(error.status).json({ error: error.data });
@@ -16,7 +17,9 @@ router.post('/v1/user/create', function (req, res, next) {
         }
 
         // success
-        res.json({});
+        sessionCreate({ username: record.username, email: record.email }, res, (error, res) => {
+            res.json({});
+        });
     });
 });
 
@@ -33,8 +36,8 @@ function createUser(username, password, callback) {
         passwordConfirm: password
     };
 
-    pbAdmin.collection('users').create(data).then((response) => {
-        callback(null, response);
+    pbAdmin.collection('users').create(data).then((record) => {
+        callback(null, record);
     }).catch((error) => {
         callback(error, null);
     });

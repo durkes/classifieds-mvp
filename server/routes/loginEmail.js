@@ -1,15 +1,14 @@
 import express from 'express';
 import { pbAdmin, pbUser } from '../utils/dbms.js';
-import { jwtSign } from '../utils/jwt.js';
+import { sessionCreate, sessionLogout } from '../utils/session-jwt.js';
 
 const router = express.Router();
 export default router;
 
 router.get('/v1/logout', function (req, res, next) {
-    res.clearCookie('userEmail');
-    res.clearCookie('isLoggedIn');
-    res.clearCookie('userToken');
-    res.json({});
+    sessionLogout({ userEmail: req.cookies.userEmail }, res, (error, res) => {
+        res.json({});
+    });
 });
 
 router.post('/v1/login/email', function (req, res, next) {
@@ -24,22 +23,23 @@ router.post('/v1/login/email', function (req, res, next) {
     }
 
     if (!req.body.password) {
-        res.cookie('userEmail', req.body.username);
-        res.clearCookie('isLoggedIn');
-        res.clearCookie('userToken');
+        // logout in case existing session
+        sessionLogout({ userEmail: req.cookies.userEmail }, res, (error, res) => {
+            res.cookie('userEmail', req.body.username);
 
-        getUserData(req.body.username, (error, userData) => {
-            if (error) {
-                if (error.status === 404) {
-                    return res.json({ found: false }); // prompt to create account
+            getUserData(req.body.username, (error, userData) => {
+                if (error) {
+                    if (error.status === 404) {
+                        return res.json({ found: false }); // prompt to create account
+                    }
+
+                    // unexpected error
+                    return next(error);
                 }
 
-                // unexpected error
-                return next(error);
-            }
-
-            // success
-            res.json({ found: true }); // proceed to login
+                // success
+                res.json({ found: true }); // proceed to login
+            });
         });
     }
     else {
@@ -54,13 +54,9 @@ router.post('/v1/login/email', function (req, res, next) {
             }
 
             // success
-            res.cookie('isLoggedIn', 1);
-            res.cookie('userToken', jwtSign({ username: authData.username, email: authData.email }),
-                {
-                    httpOnly: true,
-                    // secure: true, // true in production
-                });
-            res.json({});
+            sessionCreate({ username: authData.record.username, email: authData.record.email }, res, (error, res) => {
+                res.json({});
+            });
         });
     }
 });
