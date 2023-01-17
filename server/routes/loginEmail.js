@@ -4,6 +4,12 @@ import pb from '../utils/dbms.js';
 const router = express.Router();
 export default router;
 
+router.get('/v1/logout', function (req, res, next) {
+    res.clearCookie('userEmail');
+    res.clearCookie('isLoggedIn');
+    res.json({});
+});
+
 router.post('/v1/login/email', function (req, res, next) {
     // username/email will be the same for this app and referenced generally as username
     if (!req.body.username) {
@@ -44,6 +50,7 @@ router.post('/v1/login/email', function (req, res, next) {
             }
 
             // success
+            res.cookie('isLoggedIn', 1);
             res.json({});
         });
     }

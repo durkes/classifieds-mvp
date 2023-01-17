@@ -29,6 +29,9 @@ router.post('/v1/login/oauth', function (req, res, next) {
             emailVisibility: false,
         }
     ).then((authData) => {
+        // success
+        res.cookie('userEmail', authData.record.email || authData.record.username);
+        res.cookie('isLoggedIn', 1);
         res.json({});
     }).catch((error) => {
         if (error.status === 400) {
