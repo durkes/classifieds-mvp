@@ -40,15 +40,18 @@ export default function Navbar() {
         }
     }
 
-    const avatars = ['👱', '👩', '👦', '👧', '👨', '👶', '🙂', '😀', '😃', '😉', '🤖', '👽'];
-    const randomAvatar = randomItem(avatars);
+    let avatar = '👤';
+    if (sessionData.isLoggedIn) {
+        const avatars = ['👱', '👩', '👦', '👧', '👨', '👶', '🙂', '😀', '😃', '😉', '🤖', '👽'];
+        avatar = randomItem(avatars);
+    }
 
     function randomItem(items) {
         return items[Math.floor(Math.random() * items.length)];
     }
 
     const navMenu = [
-        { label: 'View Listings 🔍', href: '/listings/view' },
+        { label: 'View Listings 🔍', href: '/listings/find' },
         { label: 'Sell Your Car <span class="text-lg leading-none">🏷️</span>', href: '/listings/new' },
     ];
 
@@ -61,15 +64,15 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="bg-white border-gray-200 py-2.5 rounded dark:bg-gray-900">
-            <div className="container flex flex-wrap items-center justify-between mx-auto">
+        <nav className="bg-white drop-shadow-md dark:bg-gray-900">
+            <div className="relative container xl:max-w-6xl mx-auto py-3 px-1 flex flex-wrap items-center justify-between">
                 <Link to="/" className="flex items-center">
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Classifieds</span>
                 </Link>
                 <div className="flex items-center md:order-2">
                     <button onClick={handleUserMenuClick} type="button" className="flex mr-3 text-sm bg-gray-200 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded={userMenuOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
-                        <span className="text-3xl">{randomAvatar}</span>
+                        <span className="text-3xl">{avatar}</span>
                     </button>
                     <div className={`z-20 absolute top-12 right-1 ${!userMenuOpen ? 'hidden' : ''} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown">
                         <div className="px-4 py-3">
