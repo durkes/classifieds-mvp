@@ -2,15 +2,16 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
 import { MyAccount, UserCreate, Login, LoginEmail, OAuthCallback, Logout } from './User';
-import { Listings, MyListings, MyFavorites, NewPost } from './Listings';
+import { Listings, ListingItem, MyListings, MyFavorites, NewPost } from './Listings';
 
 export default function BaseLayout() {
     return (
-        <div className="max-w-6xl mx-auto px-2 sm:px-4 relative">
+        <div className="">
             <Navbar />
-            <div className="container mx-auto">
+            <div className="container xl:max-w-6xl mx-auto mt-8 xl:mt-10 px-2">
                 <Routes>
-                    <Route path="/listings/view" element={<Listings />} />
+                    <Route path="/listings/find" element={<Listings />} />
+                    <Route path="/listings/item/:id" element={<ListingItem />} />
                     <Route path="/listings/new" element={<NewPost />} />
                     <Route path="/listings/mine" element={<MyListings />} />
                     <Route path="/listings/saved" element={<MyFavorites />} />
