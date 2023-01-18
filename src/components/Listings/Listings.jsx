@@ -3,8 +3,7 @@ export default function Listings() {
         <header className="mb-8 grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-9 gap-3 sm:gap-4 xl:gap-5 text-sm md:text-base bg-slate-100 p-3 sm:p-4 rounded-2xl">
             <div className="col-span-2">
                 <fieldset className="block">
-                    <legend className="text-gray-700 whitespace-nowrap">Vehicle type</legend>
-                    <div className="mt-0.5 grid grid-cols-2 gap-2">
+                    <div className="mt-2 grid grid-cols-2 gap-2">
                         <div className="col-span-1">
                             <div>
                                 <label className="inline-flex items-center">
