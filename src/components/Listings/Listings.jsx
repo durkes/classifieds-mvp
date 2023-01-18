@@ -6,7 +6,7 @@ import LoadingOverlay from '../LoadingOverlay';
 
 export default function Listings() {
     const { isSuccess, isError, data, error } = useQuery('listings', () =>
-        fetchHelper('post', '/v1/listings', {}), { retry: 8 });
+        fetchHelper('post', '/v1/listings', {}), { retry: 6 });
 
     useEffect(() => {
         if (isError) {
