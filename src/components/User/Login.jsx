@@ -53,7 +53,7 @@ export default function Login() {
     return (<>
         {checkUser.isLoading && <LoadingOverlay />}
 
-        <div className="z-40 fixed top-0 left-0 overflow-auto grid h-screen w-screen place-items-center bg-slate-800 px-4 text-sm font-medium" >
+        <div className="z-40 fixed top-0 left-0 overflow-auto grid h-screen w-screen place-items-center bg-slate-800 px-4 text-sm font-medium">
             <div className="w-full max-w-sm rounded-lg bg-slate-700/30 shadow">
                 <form onSubmit={handleSubmit} className="p-4 md:p-5 lg:p-6">
                     <div className="grid gap-y-3">
@@ -90,7 +90,7 @@ export default function Login() {
                         </button>
                     </div>
                 </form>
-            </div >
-        </div >
+            </div>
+        </div>
     </>);
 }

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
@@ -17,7 +16,7 @@ export default function Listings() {
     if (!isSuccess) {
         return <LoadingOverlay />;
     }
-    console.log(data);
+
     return (<>
         <h2 className="text-2xl font-bold mb-8">My Listings</h2>
         <div className="-m-4 flex flex-wrap">

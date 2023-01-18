@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
 import LoadingOverlay from '../LoadingOverlay';
@@ -47,10 +46,13 @@ export default function ListingItem() {
                 </div>
                 <p>{data.description}</p>
                 {data.isOwner ?
-                    <button onClick={handleDelete}>🗑️<span className="underline">Delete this listing</span></button> :
+                    <>
+                        <Link to={'/listings/edit/' + id}>Edit this listing</Link>
+                        <button onClick={handleDelete} className="ml-3">🗑️<span className="underline">Delete this listing</span></button>
+                    </> :
                     <button><span className="underline">Contact this seller</span></button>
                 }
             </section>
-        </div >
+        </div>
     );
 }
