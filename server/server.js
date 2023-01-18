@@ -7,6 +7,7 @@ import loginEmail from './routes/loginEmail.js';
 import userCreate from './routes/userCreate.js';
 import listingItem from './routes/listingItem.js';
 import listingCreate from './routes/listingCreate.js';
+import listingUpdate from './routes/listingUpdate.js';
 import listingDelete from './routes/listingDelete.js';
 import userListings from './routes/userListings.js';
 
@@ -40,7 +41,7 @@ export default function server() {
     app.use('/v1', listingItem);
 
     app.use('/v1', sessionGate); // res.status(401) if user not authenticated
-    app.use('/v1', [listingCreate, listingDelete, userListings]);
+    app.use('/v1', [listingCreate, listingUpdate, listingDelete, userListings]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
