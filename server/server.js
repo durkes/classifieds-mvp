@@ -1,10 +1,11 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import sessionGate from './middleware/session-gate.js';
+import { sessionData, sessionGate } from './middleware/session-gate.js';
 import loginOAuth from './routes/loginOAuth.js';
 import loginEmail from './routes/loginEmail.js';
 import userCreate from './routes/userCreate.js';
+import listingItem from './routes/listingItem.js';
 import listingCreate from './routes/listingCreate.js';
 
 
@@ -13,6 +14,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const assetsDir = '../assets'; // uploads/dynamic
 const staticDir = '../dist'; // relative path
 const custom404 = staticDir + '/404.html';
 const port = 80;
@@ -32,11 +34,19 @@ export default function server() {
     // route imports
     app.use('/v1', [loginOAuth, loginEmail]);
     app.use('/v1', [userCreate]);
-    app.use('/v1', sessionGate); // user must be logged in for next matching routes
+    app.use('/v1', sessionData); // attaches req.sessionData
+    app.use('/v1', listingItem);
+    app.use('/v1', sessionGate); // res.status(401) if user not authenticated
     app.use('/v1', listingCreate);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
+
+    // serve uplaoded image files
+    app.use('/', express.static(path.join(__dirname, assetsDir)));
+    app.get('/img/*', function (req, res) { // catch 404s
+        res.sendFile(path.join(__dirname, assetsDir, '/img/_placeholder.jpg'));
+    });
 
     // react route prefixes
     app.get(['/listings/*', '/user/*'], function (req, res) {

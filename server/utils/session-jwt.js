@@ -26,6 +26,7 @@ export function sessionVerify(req, res, callback) {
     jwt.verify(req.cookies.userToken, secret, function (error, decoded) {
         if (error) {
             return sessionLogout(req, res, (_error, req, res) => {
+                req.sessionData = {};
                 callback(error, req, res);
             });
         }
