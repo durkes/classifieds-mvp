@@ -65,7 +65,7 @@ export default function Navbar() {
 
     return (
         <nav className="bg-white drop-shadow-md dark:bg-gray-900">
-            <div className="relative container xl:max-w-6xl mx-auto py-3 px-1 flex flex-wrap items-center justify-between">
+            <div className="relative container xl:max-w-6xl mx-auto py-3 px-2 flex flex-wrap items-center justify-between">
                 <Link to="/" className="flex items-center">
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Classifieds</span>
                 </Link>

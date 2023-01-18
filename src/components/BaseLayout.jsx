@@ -6,9 +6,9 @@ import { Listings, ListingItem, MyListings, MyFavorites, NewPost } from './Listi
 
 export default function BaseLayout() {
     return (
-        <div>
+        <div className="">
             <Navbar />
-            <main className="container xl:max-w-6xl mx-auto mt-10 xl:mt-12 px-2">
+            <main className="container xl:max-w-6xl mx-auto mt-8 xl:mt-10 px-3 mb-12">
                 <Routes>
                     <Route path="/listings/find" element={<Listings />} />
                     <Route path="/listings/item/:id" element={<ListingItem />} />
