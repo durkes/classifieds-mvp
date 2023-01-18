@@ -1,4 +1,23 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import fetchHelper from '../../assets/fetch-helper';
+import LoadingOverlay from '../LoadingOverlay';
+
 export default function Listings() {
+    const { isSuccess, isError, data, error } = useQuery('listings', () =>
+        fetchHelper('post', '/v1/listings', {}), { retry: 8 });
+
+    useEffect(() => {
+        if (isError) {
+            alert('Something went wrong. Please try again later.');
+        }
+    }, [isError]);
+
+    if (!isSuccess) {
+        return <LoadingOverlay />;
+    }
+
     return (<>
         <header className="mb-8 grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-9 gap-3 sm:gap-4 xl:gap-5 text-sm md:text-base bg-slate-100 p-3 sm:p-4 rounded-2xl">
             <div className="col-span-2">
@@ -83,18 +102,25 @@ export default function Listings() {
                 </label>
             </div>
         </header>
+
         <div className="-m-4 flex flex-wrap">
-            <div className="w-full p-4 md:w-1/2 lg:w-1/4 cursor-pointer">
-                <span className="block h-48 overflow-hidden rounded-lg">
-                    <img alt="Title of listing" className="h-full w-full object-cover object-center" src="https://images.craigslist.org/00Y0Y_1tuTErtSfYQ_0uY0ne_600x450.jpg" />
-                </span>
-                <div className="mt-4">
-                    <h3 className="inline-block text-xs tracking-widest text-slate-500">2013</h3>
-                    <h3 className="float-right text-xs tracking-widest text-slate-500">60,543🕛</h3>
-                    <h2 className="leading-snug text-lg font-medium text-slate-900">Nissan Altima, black exterior, tan leather interior</h2>
-                    <p className="mt-1">$7,900</p>
-                </div>
-            </div>
+            {data.items && data.items.map(item => <ItemPreview {...item} />)}
         </div>
     </>);
+}
+
+function ItemPreview({ id, headline, year, mileage, price }) {
+    return (
+        <Link to={'/listings/item/' + id} className="w-full p-4 md:w-1/2 lg:w-1/4">
+            <span className="block h-48 overflow-hidden rounded-lg">
+                <img alt={headline} className="h-full w-full object-cover object-center" src={'/img/' + id + '.jpg'} />
+            </span>
+            <div className="mt-4">
+                <h3 className="inline-block text-xs tracking-widest text-slate-500">{year}</h3>
+                <h3 className="float-right text-xs tracking-widest text-slate-500">{mileage}🕛</h3>
+                <h2 className="leading-snug text-lg font-medium text-slate-900">{headline}</h2>
+                <p className="mt-1">{'$' + price}</p>
+            </div>
+        </Link>
+    );
 }

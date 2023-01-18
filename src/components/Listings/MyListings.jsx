@@ -19,6 +19,7 @@ export default function Listings() {
 
     return (<>
         <h2 className="text-2xl font-bold mb-8">My Listings</h2>
+
         <div className="-m-4 flex flex-wrap">
             {data.items && data.items.map(item => <ItemPreview {...item} />)}
         </div>
