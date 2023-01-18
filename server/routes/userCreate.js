@@ -5,7 +5,7 @@ import { sessionCreate } from '../utils/session-jwt.js';
 const router = express.Router();
 export default router;
 
-router.post('/v1/user/create', function (req, res, next) {
+router.post('/user/create', function (req, res, next) {
     createUser(req.body.username, req.body.password, (error, record) => {
         if (error) {
             if (error.status === 400) {
@@ -23,7 +23,7 @@ router.post('/v1/user/create', function (req, res, next) {
     });
 });
 
-router.put('/v1/user/update', function (req, res, next) {
+router.put('/user/update', function (req, res, next) {
     return res.json({});
 });
 

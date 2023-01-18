@@ -9,7 +9,7 @@ export default router;
 router.use(loginOAuthReq); // set state and get codeVerifier; redirect to provider login
 
 // confirm credentials from provider
-router.post('/v1/login/oauth', function (req, res, next) {
+router.post('/login/oauth', function (req, res, next) {
     if (req.body.state !== req.cookies.OAuthState) {
         const error = {
             code: 401,

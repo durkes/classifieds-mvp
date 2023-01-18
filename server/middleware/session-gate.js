@@ -8,8 +8,12 @@ export default router;
 router.use(function (req, res, next) {
     sessionVerify(req, res, (error, req, res) => {
         if (error) {
-            res.status(401);
-            return res.json({});
+            const _error = {
+                code: 401,
+                message: 'Unauthorized'
+            };
+
+            return res.status(_error.code).json({ error: _error });
         }
 
         // ok, continue

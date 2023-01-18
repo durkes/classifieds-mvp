@@ -4,12 +4,12 @@ import { pbUser } from '../utils/dbms.js';
 const router = express.Router();
 export default router;
 
-router.get('/v1/login/oauth/twitter', function (req, res, next) {
+router.get('/login/oauth/twitter', function (req, res, next) {
     const providerName = 'twitter';
     resOAuthReq(providerName, req, res, next);
 });
 
-router.get('/v1/login/oauth/google', function (req, res, next) {
+router.get('/login/oauth/google', function (req, res, next) {
     const providerName = 'google';
     resOAuthReq(providerName, req, res, next);
 });

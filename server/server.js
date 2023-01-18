@@ -1,10 +1,11 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import sessionGate from './middleware/session-gate.js';
 import loginOAuth from './routes/loginOAuth.js';
 import loginEmail from './routes/loginEmail.js';
 import userCreate from './routes/userCreate.js';
-import sessionGate from './middleware/session-gate.js';
+import listingCreate from './routes/listingCreate.js';
 
 
 import path from 'path';
@@ -29,9 +30,10 @@ export default function server() {
     app.use(express.json()); // parse incoming POST JSON data
 
     // route imports
-    app.use([loginOAuth, loginEmail]);
-    app.use([userCreate]);
-    app.use('/v1/*', sessionGate); // user must be logged in for next matching routes
+    app.use('/v1', [loginOAuth, loginEmail]);
+    app.use('/v1', [userCreate]);
+    app.use('/v1', sessionGate); // user must be logged in for next matching routes
+    app.use('/v1', listingCreate);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));

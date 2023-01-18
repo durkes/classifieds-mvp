@@ -5,13 +5,13 @@ import { sessionCreate, sessionLogout } from '../utils/session-jwt.js';
 const router = express.Router();
 export default router;
 
-router.get('/v1/logout', function (req, res, next) {
+router.get('/logout', function (req, res, next) {
     sessionLogout(req, res, (error, req, res) => {
         res.json({});
     });
 });
 
-router.post('/v1/login/email', function (req, res, next) {
+router.post('/login/email', function (req, res, next) {
     // username/email will be the same for this app and referenced generally as username
     if (!req.body.username) {
         const error = {
