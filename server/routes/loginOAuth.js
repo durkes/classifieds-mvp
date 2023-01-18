@@ -34,7 +34,7 @@ router.post('/v1/login/oauth', function (req, res, next) {
         pbUser.authStore.clear();
 
         // success
-        sessionCreate({ username: authData.record.username, email: authData.record.email }, res, (error, res) => {
+        sessionCreate({ id: authData.record.id, username: authData.record.username, email: authData.record.email }, req, res, (error, req, res) => {
             // clean up cookies
             res.clearCookie('OAuthName');
             res.clearCookie('OAuthState');

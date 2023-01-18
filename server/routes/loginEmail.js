@@ -6,7 +6,7 @@ const router = express.Router();
 export default router;
 
 router.get('/v1/logout', function (req, res, next) {
-    sessionLogout({ userEmail: req.cookies.userEmail }, res, (error, res) => {
+    sessionLogout(req, res, (error, req, res) => {
         res.json({});
     });
 });
@@ -24,7 +24,7 @@ router.post('/v1/login/email', function (req, res, next) {
 
     if (!req.body.password) {
         // logout in case existing session
-        sessionLogout({ userEmail: req.cookies.userEmail }, res, (error, res) => {
+        sessionLogout(req, res, (error, req, res) => {
             res.cookie('userEmail', req.body.username);
 
             getUserData(req.body.username, (error, userData) => {
@@ -54,7 +54,7 @@ router.post('/v1/login/email', function (req, res, next) {
             }
 
             // success
-            sessionCreate({ username: authData.record.username, email: authData.record.email }, res, (error, res) => {
+            sessionCreate({ id: authData.record.id, username: authData.record.username, email: authData.record.email }, req, res, (error, req, res) => {
                 res.json({});
             });
         });
