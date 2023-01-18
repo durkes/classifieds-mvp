@@ -3,7 +3,9 @@ import cookieParser from 'cookie-parser';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import loginOAuth from './routes/loginOAuth.js';
 import loginEmail from './routes/loginEmail.js';
-import userMutate from './routes/userMutate.js';
+import userCreate from './routes/userCreate.js';
+import sessionGate from './middleware/session-gate.js';
+
 
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
@@ -28,7 +30,8 @@ export default function server() {
 
     // route imports
     app.use([loginOAuth, loginEmail]);
-    app.use([userMutate]);
+    app.use([userCreate]);
+    app.use('/v1/*', sessionGate); // user must be logged in for next matching routes
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));

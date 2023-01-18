@@ -1,29 +1,38 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-export function sessionCreate(sessionData, res, callback) {
+export function sessionCreate(sessionData, req, res, callback) {
     res.cookie('isLoggedIn', 1);
     res.cookie('userEmail', sessionData.email || sessionData.username);
 
     const expiresIn = '30d'; // eg. 60s, 24h, 7d
-    res.cookie('userToken', jwtSign({ username: sessionData.username, email: sessionData.email }, { expiresIn: expiresIn }),
+    res.cookie('userToken', jwtSign(sessionData, { expiresIn: expiresIn }),
         {
             httpOnly: true,
             // secure: true, // true in production
         });
 
-    callback(null, res);
+    callback(null, req, res);
 }
 
-export function sessionLogout(sessionData, res, callback) {
+export function sessionLogout(req, res, callback) {
     res.clearCookie('isLoggedIn');
     res.clearCookie('userEmail');
     res.clearCookie('userToken');
-    callback(null, res);
+    callback(null, req, res);
 }
 
-export function sessionVerify(token, callback) {
+export function sessionVerify(req, res, callback) {
+    jwt.verify(req.cookies.userToken, secret, function (error, decoded) {
+        if (error) {
+            return sessionLogout(req, res, (_error, req, res) => {
+                callback(error, req, res);
+            });
+        }
 
+        req.sessionData = decoded;
+        callback(null, req, res);
+    });
 }
 
 const secret = crypto.randomBytes(64).toString('hex');
