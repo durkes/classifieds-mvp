@@ -17,7 +17,7 @@ router.post('/v1/user/create', function (req, res, next) {
         }
 
         // success
-        sessionCreate({ username: record.username, email: record.email }, res, (error, res) => {
+        sessionCreate({ id: record.id, username: record.username, email: record.email }, req, res, (error, req, res) => {
             res.json({});
         });
     });
