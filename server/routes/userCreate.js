@@ -24,7 +24,7 @@ router.post('/user/create', function (req, res, next) {
 });
 
 router.put('/user/update', function (req, res, next) {
-    return res.json({});
+    res.json({});
 });
 
 function createUser(username, password, callback) {
