@@ -38,23 +38,11 @@ export default function Listings() {
             <div className="col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                     <label className="col-span-1 block">
-                        <span className="text-gray-700 whitespace-nowrap">Year (min)</span>
+                        <span className="text-slate-700 whitespace-nowrap">Year (min)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                     </label>
                     <label className="col-span-1 block">
-                        <span className="text-gray-700">(max)</span>
-                        <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
-                    </label>
-                </div>
-            </div>
-            <div className="col-span-2">
-                <div className="grid grid-cols-2 gap-2">
-                    <label className="col-span-1 block">
-                        <span className="text-gray-700 whitespace-nowrap">Mileage (min)</span>
-                        <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
-                    </label>
-                    <label className="col-span-1 block">
-                        <span className="text-gray-700">(max)</span>
+                        <span className="text-slate-700">(max)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                     </label>
                 </div>
@@ -62,18 +50,30 @@ export default function Listings() {
             <div className="col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                     <label className="col-span-1 block">
-                        <span className="text-gray-700 whitespace-nowrap">Price (min)</span>
+                        <span className="text-slate-700 whitespace-nowrap">Mileage (min)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                     </label>
                     <label className="col-span-1 block">
-                        <span className="text-gray-700">(max)</span>
+                        <span className="text-slate-700">(max)</span>
+                        <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                    </label>
+                </div>
+            </div>
+            <div className="col-span-2">
+                <div className="grid grid-cols-2 gap-2">
+                    <label className="col-span-1 block">
+                        <span className="text-slate-700 whitespace-nowrap">Price (min)</span>
+                        <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                    </label>
+                    <label className="col-span-1 block">
+                        <span className="text-slate-700">(max)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                     </label>
                 </div>
             </div>
             <div className="col-span-2 sm:col-span-1">
                 <label className="block">
-                    <span className="text-gray-700 whitespace-nowrap">Sort by</span>
+                    <span className="text-slate-700 whitespace-nowrap">Sort by</span>
                     <select className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
                         <option>New ads first</option>
                         <option>Price</option>
@@ -89,9 +89,9 @@ export default function Listings() {
                     <img alt="Title of listing" className="h-full w-full object-cover object-center" src="https://images.craigslist.org/00Y0Y_1tuTErtSfYQ_0uY0ne_600x450.jpg" />
                 </span>
                 <div className="mt-4">
-                    <h3 className="inline-block text-xs tracking-widest text-gray-500">2013</h3>
-                    <h3 className="float-right text-xs tracking-widest text-gray-500">60,543🕛</h3>
-                    <h2 className="leading-snug text-lg font-medium text-gray-900">Nissan Altima, black exterior, tan leather interior</h2>
+                    <h3 className="inline-block text-xs tracking-widest text-slate-500">2013</h3>
+                    <h3 className="float-right text-xs tracking-widest text-slate-500">60,543🕛</h3>
+                    <h2 className="leading-snug text-lg font-medium text-slate-900">Nissan Altima, black exterior, tan leather interior</h2>
                     <p className="mt-1">$7,900</p>
                 </div>
             </div>

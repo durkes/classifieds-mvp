@@ -4,7 +4,7 @@ export default function ListingItem() {
             <aside className="md:col-span-3">
                 <img className="rounded-lg" src="https://images.craigslist.org/00Y0Y_1tuTErtSfYQ_0uY0ne_600x450.jpg" alt="Vehicle for sale" />
             </aside>
-            <section className="md:col-span-4 prose">
+            <section className="md:col-span-4 prose prose-slate">
                 <h2 className="mb-2">2013 Nissan Altima, black exterior, tan leather interior</h2>
                 <div>
                     <span className="bg-indigo-100 text-indigo-800 font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
