@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useParams, Navigate } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-query';
 import fetchHelper from '../../assets/fetch-helper';
 import LoadingOverlay from '../LoadingOverlay';
 
@@ -9,8 +9,21 @@ export default function ListingItem() {
     const { isSuccess, isError, data, error } = useQuery(['item', id], () =>
         fetchHelper('post', '/v1/listings/item', { id: id }));
 
+    const deleteItem = useMutation(() => {
+        return fetchHelper('post', '/v1/listings/delete', { id: id });
+    });
+    function handleDelete() {
+        if (window.confirm('Are you sure you want to delete this listing? This cannot be undone.')) {
+            deleteItem.mutate();
+        }
+    }
+
     if (!isSuccess) {
         return <LoadingOverlay />;
+    }
+
+    if (deleteItem.isSuccess) {
+        return <Navigate replace to="/listings/mine" />;
     }
 
     return (
@@ -34,7 +47,7 @@ export default function ListingItem() {
                 </div>
                 <p>{data.description}</p>
                 {data.isOwner ?
-                    <button>🗑️<span className="underline">Delete this listing</span></button> :
+                    <button onClick={handleDelete}>🗑️<span className="underline">Delete this listing</span></button> :
                     <button><span className="underline">Contact this seller</span></button>
                 }
             </section>

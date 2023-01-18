@@ -95,7 +95,6 @@ export default function Listings() {
                     <p className="mt-1">$7,900</p>
                 </div>
             </div>
-
         </div>
     </>);
 }

@@ -20,7 +20,7 @@ router.post('/listings/item', function (req, res, next) {
         if (record.uid === req?.sessionData?.id) {
             itemData.isOwner = true;
         }
-        // TODO check if favorite
+        // TODO: check if favorite
         // itemData.isFavorite = true;
 
         res.json(itemData);

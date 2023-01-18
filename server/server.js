@@ -7,7 +7,8 @@ import loginEmail from './routes/loginEmail.js';
 import userCreate from './routes/userCreate.js';
 import listingItem from './routes/listingItem.js';
 import listingCreate from './routes/listingCreate.js';
-
+import listingDelete from './routes/listingDelete.js';
+import userListings from './routes/userListings.js';
 
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
@@ -31,13 +32,15 @@ export default function server() {
     app.use(cookieParser());
     app.use(express.json()); // parse incoming POST JSON data
 
-    // route imports
+    // route imports and custom middleware
     app.use('/v1', [loginOAuth, loginEmail]);
     app.use('/v1', [userCreate]);
+
     app.use('/v1', sessionData); // attaches req.sessionData
     app.use('/v1', listingItem);
+
     app.use('/v1', sessionGate); // res.status(401) if user not authenticated
-    app.use('/v1', listingCreate);
+    app.use('/v1', [listingCreate, listingDelete, userListings]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
