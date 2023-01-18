@@ -5,16 +5,19 @@ const router = express.Router();
 export default router;
 
 router.post('/listings/create', function (req, res, next) {
-    res.json({
-        sessionData: req.sessionData,
-        body: req.body
+    const data = {
+        uid: req.sessionData.id,
+        year: req.body.year,
+        mileage: req.body.mileage,
+        price: req.body.price,
+        type: req.body.type,
+        headline: req.body.headline,
+        description: req.body.description
+    };
+
+    pbAdmin.collection('listings').create(data).then((record) => {
+        res.json({ id: record.id });
+    }).catch((error) => {
+        return res.status(error.status).json({ error: error.data });
     });
 });
-
-function getUserData(username, callback) {
-    pbAdmin.collection('users').getFirstListItem(`(username='${username}' || email='${username}')`).then((userData) => {
-        callback(null, userData);
-    }).catch((error) => {
-        callback(error, null);
-    });
-}
