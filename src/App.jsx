@@ -3,7 +3,7 @@ import SessionContext from './context/SessionContext';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { getCookie } from './assets/browser-cookies';
+import { getCookie } from './utils/browser-cookies';
 import BaseLayout from './components/BaseLayout';
 import './App.css';
 

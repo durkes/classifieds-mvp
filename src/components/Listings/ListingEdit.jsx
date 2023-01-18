@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
-import fetchHelper from '../../assets/fetch-helper';
+import fetchHelper from '../../utils/fetch-helper';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function ListingEdit() {

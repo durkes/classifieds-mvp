@@ -2,8 +2,8 @@ import { useState, useContext, useEffect } from 'react';
 import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import fetchHelper from '../../assets/fetch-helper';
-import { setCookie } from '../../assets/browser-cookies';
+import fetchHelper from '../../utils/fetch-helper';
+import { setCookie } from '../../utils/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function ListingCreate() {

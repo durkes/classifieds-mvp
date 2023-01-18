@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import fetchHelper from '../../assets/fetch-helper';
+import fetchHelper from '../../utils/fetch-helper';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function Listings() {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import SessionContext from '../context/SessionContext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { setCookie } from '../assets/browser-cookies';
+import { setCookie } from '../utils/browser-cookies';
 
 export default function Navbar() {
     const location = useLocation();

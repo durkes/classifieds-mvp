@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import fetchHelper from '../../assets/fetch-helper';
-import { getCookie } from '../../assets/browser-cookies';
+import fetchHelper from '../../utils/fetch-helper';
+import { getCookie } from '../../utils/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
 
 // https://tailwindcomponents.com/component/custom-nextauth-login-page

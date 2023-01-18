@@ -1,6 +1,6 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
-import fetchHelper from '../../assets/fetch-helper';
+import fetchHelper from '../../utils/fetch-helper';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function ListingItem() {
