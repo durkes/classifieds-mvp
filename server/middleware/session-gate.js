@@ -1,22 +1,27 @@
 import express from 'express';
 import { sessionVerify } from '../utils/session-jwt.js';
 
-const router = express.Router();
-export default router;
+export const sessionData = express.Router();
+export const sessionGate = express.Router();
 
 // confirm credentials from provider
-router.use(function (req, res, next) {
+sessionData.use(function (req, res, next) {
     sessionVerify(req, res, (error, req, res) => {
-        if (error) {
-            const _error = {
-                code: 401,
-                message: 'Unauthorized'
-            };
-
-            return res.status(_error.code).json({ error: _error });
-        }
-
-        // ok, continue
+        // req.sessionData attached
         next();
     });
+});
+
+sessionGate.use(function (req, res, next) {
+    if (!req.sessionData.id) {
+        const error = {
+            code: 401,
+            message: 'Unauthorized'
+        };
+
+        return res.status(error.code).json({ error: error });
+    }
+
+    // ok, continue
+    next();
 });
