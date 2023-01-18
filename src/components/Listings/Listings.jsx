@@ -1,10 +1,10 @@
 export default function Listings() {
     return (<>
-        <header className="mb-8 grid grid-cols-5 lg:grid-cols-9 gap-2 sm:gap-4 xl:gap-6 text-xs sm:text-sm md:text-base bg-slate-100 p-2 sm:p-4 rounded-2xl">
+        <header className="mb-8 grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-9 gap-3 sm:gap-4 xl:gap-5 text-sm md:text-base bg-slate-100 p-3 sm:p-4 rounded-2xl">
             <div className="col-span-2">
                 <fieldset className="block">
                     <legend className="text-gray-700 whitespace-nowrap">Vehicle type</legend>
-                    <div className="mt-0.5 grid grid-cols-2 gap-1 sm:gap-2">
+                    <div className="mt-0.5 grid grid-cols-2 gap-2">
                         <div className="col-span-1">
                             <div>
                                 <label className="inline-flex items-center">
@@ -37,7 +37,7 @@ export default function Listings() {
                 </fieldset>
             </div>
             <div className="col-span-2">
-                <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                <div className="grid grid-cols-2 gap-2">
                     <label className="col-span-1 block">
                         <span className="text-gray-700 whitespace-nowrap">Year (min)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
@@ -49,7 +49,7 @@ export default function Listings() {
                 </div>
             </div>
             <div className="col-span-2">
-                <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                <div className="grid grid-cols-2 gap-2">
                     <label className="col-span-1 block">
                         <span className="text-gray-700 whitespace-nowrap">Mileage (min)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
@@ -61,7 +61,7 @@ export default function Listings() {
                 </div>
             </div>
             <div className="col-span-2">
-                <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                <div className="grid grid-cols-2 gap-2">
                     <label className="col-span-1 block">
                         <span className="text-gray-700 whitespace-nowrap">Price (min)</span>
                         <input type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
@@ -72,7 +72,7 @@ export default function Listings() {
                     </label>
                 </div>
             </div>
-            <div className="col-span-1">
+            <div className="col-span-2 sm:col-span-1">
                 <label className="block">
                     <span className="text-gray-700 whitespace-nowrap">Sort by</span>
                     <select className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
