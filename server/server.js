@@ -9,7 +9,7 @@ import listingItem from './routes/listingItem.js';
 import listingCreate from './routes/listingCreate.js';
 import listingUpdate from './routes/listingUpdate.js';
 import listingDelete from './routes/listingDelete.js';
-import userListings from './routes/userListings.js';
+import listings from './routes/listings.js';
 
 import path from 'path';
 // path __dirname for module scope: https://stackoverflow.com/a/72462507
@@ -38,10 +38,10 @@ export default function server() {
     app.use('/v1', [userCreate]);
 
     app.use('/v1', sessionData); // attaches req.sessionData
-    app.use('/v1', listingItem);
+    app.use('/v1', listings, listingItem);
 
     app.use('/v1', sessionGate); // res.status(401) if user not authenticated
-    app.use('/v1', [listingCreate, listingUpdate, listingDelete, userListings]);
+    app.use('/v1', [listingCreate, listingUpdate, listingDelete]);
 
     // serve static files
     app.use('/', express.static(path.join(__dirname, staticDir)));
