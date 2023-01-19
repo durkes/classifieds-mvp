@@ -18,7 +18,7 @@ function App() {
     const queryClient = new QueryClient();
 
     useEffect(() => {
-        document.title = 'Auto Classifieds - Buy & Sell Cars';
+        document.title = 'Auto Marketplace - Buy & Sell Cars';
     });
 
     return (

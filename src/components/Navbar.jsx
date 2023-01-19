@@ -67,7 +67,7 @@ export default function Navbar() {
         <nav className="bg-white drop-shadow-md dark:bg-slate-900">
             <div className="relative container xl:max-w-6xl mx-auto py-3 px-2 flex flex-wrap items-center justify-between">
                 <Link to="/" className="flex items-center">
-                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Classifieds</span>
+                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><span className="text-3xl sm:text-4xl mr-0.5">🚘</span>Auto Marketplace</span>
                 </Link>
                 <div className="flex items-center md:order-2">
                     <button onClick={handleUserMenuClick} type="button" className="flex mr-3 text-sm bg-slate-200 rounded-full md:mr-0 focus:ring-4 focus:ring-slate-300 dark:focus:ring-slate-600" id="user-menu-button" aria-expanded={userMenuOpen} data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
