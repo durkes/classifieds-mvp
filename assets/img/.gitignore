@@ -1,5 +1,6 @@
 # This directory will be used for image uploads
 *
 */
+!*.jpg
 !_placeholder.jpg
 !.gitignore
