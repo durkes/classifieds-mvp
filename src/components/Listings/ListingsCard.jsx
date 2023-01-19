@@ -7,7 +7,7 @@ export default function _({ id, headline, year, mileage, price }) {
                 <img alt={headline} className="h-full w-full object-cover object-center" src={'/img/' + id + '.jpg'} />
             </span>
             <div className="mt-4">
-                <div class="grid grid-cols-2">
+                <div className="grid grid-cols-2">
                     <div className="col-span-1 text-xs tracking-widest text-slate-500">{year}</div>
                     <div className="col-span-1 text-right text-xs tracking-widest text-slate-500">{mileage}🕛</div>
                 </div>
