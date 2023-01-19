@@ -1,7 +1,6 @@
 export default function MyAccount() {
-    return (
-        <div>
-            <p>This is the My Account page. In the future, you'll be able to change your password, update your email address, etc.</p>
-        </div>
-    );
+    return (<>
+        <h2 className="text-2xl font-bold">My Account</h2>
+        <p className="mt-2 text-lg text-slate-600">This function is under construction...</p>
+    </>);
 }
