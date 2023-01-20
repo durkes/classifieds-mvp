@@ -6,7 +6,7 @@ import { Listings, ListingItem, MyListings, MyFavorites, ListingCreate, ListingE
 
 export default function BaseLayout() {
     return (
-        <div className="text-slate-800">
+        <div className="bg-white text-slate-800">
             <Navbar />
             <main className="container xl:max-w-6xl mx-auto mt-8 xl:mt-10 px-3 mb-12">
                 <Routes>
