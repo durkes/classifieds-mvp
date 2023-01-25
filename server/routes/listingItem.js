@@ -7,6 +7,7 @@ export default router;
 router.post('/listings/item', function (req, res, next) {
     pbAdmin.collection('listings').getOne(req.body.id).then((record) => {
         const itemData = {
+            // do not destructure here; need to keep some fields private
             id: record.id,
             year: record.year,
             mileage: record.mileage,
