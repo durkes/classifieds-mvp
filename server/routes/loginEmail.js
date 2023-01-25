@@ -62,7 +62,9 @@ router.post('/login/email', function (req, res, next) {
 });
 
 function getUserData(username, callback) {
-    pbAdmin.collection('users').getFirstListItem(`(username='${username}' || email='${username}')`).then((userData) => {
+    const filter = `(username='${username}' || email='${username}')`;
+
+    pbAdmin.collection('users').getFirstListItem(filter).then((userData) => {
         callback(null, userData);
     }).catch((error) => {
         callback(error, null);
