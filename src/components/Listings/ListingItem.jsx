@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import fetchHelper from '../../utils/fetch-helper';
@@ -17,6 +18,20 @@ export default function ListingItem() {
         }
     }
 
+    useEffect(() => {
+        if (isError) {
+            if (error?.response?.status === 404) {
+                alert('We couldn\'t find that listing.');
+            }
+            else {
+                alert('Something went wrong. Please try again later.');
+            }
+        }
+    }, [isError]);
+
+    if (isError) {
+        return <Navigate to="/listings/find" />;
+    }
     if (!isSuccess) {
         return <LoadingOverlay />;
     }

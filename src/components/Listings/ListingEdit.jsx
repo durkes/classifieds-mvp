@@ -43,6 +43,9 @@ export default function ListingEdit() {
             if (submitData?.error?.response?.status === 401) {
                 alert('Uh oh. It looks like you\'re not signed in!');
             }
+            else if (submitData?.error?.response?.status === 404) {
+                alert('This listing no longer exists, or you\'re not allowed to modify it.');
+            }
             else {
                 alert('Something went wrong. Please try again later.');
             }
