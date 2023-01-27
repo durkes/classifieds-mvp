@@ -65,7 +65,7 @@ export default function LoginEmail() {
 
                     <div className="grid gap-y-3">
                         <input
-                            type="email" disabled className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400 disabled:text-slate-400"
+                            type="email" disabled style={/*for iOS (disabled input)*/{ WebkitTextFillColor: '#94a3b8', opacity: 1 }} className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400 disabled:text-slate-400"
                             value={userEmail}
                         />
                         <input
