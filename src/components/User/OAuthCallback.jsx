@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import SessionContext from '../../context/SessionContext';
 import { Navigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import fetchHelper from '../../utils/fetch-helper';
 import { getCookie } from '../../utils/browser-cookies';
 import LoadingOverlay from '../LoadingOverlay';
@@ -11,20 +11,13 @@ export default function OAuthCallback() {
     const reqQuery = Object.fromEntries(new URLSearchParams(window.location.search));
     const { sessionData, setSessionData } = useContext(SessionContext);
 
-    const queryClient = useQueryClient();
-    const queryKey = 'OAuthGate';
-
-    const { isSuccess, isError, /*data, error,*/ refetch } = useQuery(queryKey, () =>
-        fetchHelper('post', '/v1/login/oauth', { state: reqQuery.state, code: reqQuery.code }),
-        { enabled: false }); // disable automatic re/fetch (to prevent infinite loop w/ removeQueries)
+    const { isSuccess, isError, /*data, error,*/ mutate } = useMutation(() => {
+        return fetchHelper('post', '/v1/login/oauth', { state: reqQuery.state, code: reqQuery.code });
+    });
 
     useEffect(() => {
-        refetch(); // fire only once by passing dependencies[] to useEffect (below) that do not change
-
-        return function onUnmount() {
-            queryClient.removeQueries(queryKey, { exact: true }); // remove the query cache on unmount
-        };
-    }, [refetch, queryClient]); // dependencies[] to prevent useEffect from firing every render
+        mutate(); // run once on load
+    }, [mutate]);
 
     useEffect(() => {
         if (isSuccess) {
