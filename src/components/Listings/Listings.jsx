@@ -1,10 +1,18 @@
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import useStateParams from '../../utils/useStateParams';
 import fetchHelper from '../../utils/fetch-helper';
 import ListingsCard from './ListingsCard';
 import LoadingOverlay from '../LoadingOverlay';
 
 export default function Listings() {
+    const [optionSort, setOptionSort] = useStateParams(
+        'created',
+        'sort',
+        (s) => s.toString(),
+        (s) => s.toString()
+    );
+
     const { isSuccess, isError, data, error } = useQuery('listings', () =>
         fetchHelper('post', '/v1/listings', {}), { retry: 6 });
 
@@ -93,11 +101,11 @@ export default function Listings() {
             <div className="col-span-2 sm:col-span-1">
                 <label className="block">
                     <span className="text-slate-700 whitespace-nowrap">Sort by</span>
-                    <select className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
-                        <option>New ads first</option>
-                        <option>Price</option>
-                        <option>Year</option>
-                        <option>Mileage</option>
+                    <select onChange={(e) => { setOptionSort(e.target.value); }} value={optionSort} className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
+                        <option value="created">New ads first</option>
+                        <option value="price">Price</option>
+                        <option value="year">Year</option>
+                        <option value="mileage">Mileage</option>
                     </select>
                 </label>
             </div>
