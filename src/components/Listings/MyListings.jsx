@@ -22,7 +22,7 @@ export default function Listings() {
         <h2 className="text-2xl font-bold">My Listings</h2>
 
         <div className="-mx-4 mt-6 flex flex-wrap">
-            {data.items && data.items.map(item => <ListingsCard {...item} />)}
+            {data.items && data.items.map(item => <ListingsCard key={item.id} {...item} />)}
         </div>
     </>);
 }

@@ -23,7 +23,7 @@ export default function MyFavotires() {
         <p className="mt-2 text-lg text-slate-600">This function is under construction...</p>
 
         <div className="-mx-4 mt-6 flex flex-wrap">
-            {data.items && data.items.map(item => <ListingsCard {...item} />)}
+            {data.items && data.items.map(item => <ListingsCard key={item.id} {...item} />)}
         </div>
     </>);
 }

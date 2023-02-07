@@ -112,7 +112,7 @@ export default function Listings() {
         </header>
 
         <div className="-mx-4 mt-6 flex flex-wrap">
-            {data.items && data.items.map(item => <ListingsCard {...item} />)}
+            {data.items && data.items.map(item => <ListingsCard key={item.id} {...item} />)}
         </div>
     </>);
 }
