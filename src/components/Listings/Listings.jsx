@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import useStateParams from '../../utils/useStateParams';
 import fetchHelper from '../../utils/fetch-helper';
 import ListingsCard from './ListingsCard';
@@ -13,8 +14,9 @@ export default function Listings() {
         (s) => s.toString()
     );
 
-    const { isSuccess, isError, data, error } = useQuery('listings', () =>
-        fetchHelper('post', '/v1/listings', {}), { retry: 6 });
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { isSuccess, isError, data, error } = useQuery(['listings', ...searchParams], () =>
+        fetchHelper('post', '/v1/listings', Object.fromEntries([...searchParams])), { retry: 6 });
 
     useEffect(() => {
         if (isError) {
@@ -102,7 +104,8 @@ export default function Listings() {
                 <label className="block">
                     <span className="text-slate-700 whitespace-nowrap">Sort by</span>
                     <select onChange={(e) => { setOptionSort(e.target.value); }} value={optionSort} className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
-                        <option value="created">New ads first</option>
+                        <option></option>
+                        <option value="-created">New ads first</option>
                         <option value="price">Price</option>
                         <option value="year">Year</option>
                         <option value="mileage">Mileage</option>

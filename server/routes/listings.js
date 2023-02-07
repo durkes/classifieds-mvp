@@ -5,7 +5,10 @@ const router = express.Router();
 export default router;
 
 router.post('/listings', function (req, res, next) {
-    getListings(null, (error, records) => {
+    const filter = null;
+    const sort = req.body.sort || null;
+
+    getListings({ sort: sort, filter: filter }, (error, records) => {
         if (error) {
             // unexpected error
             return next(error);
@@ -32,11 +35,11 @@ router.post('/listings/mine', function (req, res, next) {
     });
 });
 
-function getListings(filter, callback) {
+function getListings(params, callback) {
+    params = params || {};
+
     const page = 1, perPage = 100;
-    pbAdmin.collection('listings').getList(page, perPage, {
-        filter: filter
-    }).then((records) => {
+    pbAdmin.collection('listings').getList(page, perPage, params).then((records) => {
         callback(null, records);
     }).catch((error) => {
         callback(error, null);
