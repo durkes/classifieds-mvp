@@ -56,7 +56,7 @@ router.post('/listings/mine', function (req, res, next) {
         return res.status(error.code).json({ error: error });
     }
 
-    getListings(`uid='${req.sessionData.id}'`, (error, records) => {
+    getListings({ filter: `uid='${req.sessionData.id}'` }, (error, records) => {
         if (error) {
             return next(error);
         }
