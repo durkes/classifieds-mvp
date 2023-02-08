@@ -111,9 +111,9 @@ export default function Listings() {
                         <select onChange={e => { setOptionSort(e.target.value); updateSearch('sort', e.target.value); }} value={optionSort} className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
                             <option></option>
                             <option value="-created">New ads first</option>
-                            <option value="price">Price</option>
                             <option value="year">Year</option>
                             <option value="mileage">Mileage</option>
+                            <option value="price">Price</option>
                         </select>
                     </label>
                 </div>
