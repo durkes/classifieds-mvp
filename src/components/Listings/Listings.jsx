@@ -21,7 +21,14 @@ export default function Listings() {
     const [optionOther, setOptionOther] = useState(searchParams.get('other') === 'true');
 
     function updateSearch(param, value) {
-        searchParams.set(param, value);
+        if (value) {
+            searchParams.set(param, value);
+        }
+        else {
+            searchParams.delete(param);
+        }
+
+        searchParams.sort();
         setSearchParams(searchParams);
     }
 
