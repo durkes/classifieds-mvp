@@ -20,7 +20,17 @@ export default function Listings() {
     const [optionSuv, setOptionSuv] = useState(searchParams.get('suv') === 'true');
     const [optionOther, setOptionOther] = useState(searchParams.get('other') === 'true');
 
-    function updateSearch(param, value) {
+    function updateSearch(e) {
+        if (e.key && e.key !== 'Enter') {
+            return false;
+        }
+
+        const param = e.target.getAttribute('name');
+        let value = e.target.value;
+        if (e.target.type === 'checkbox') {
+            value = e.target.checked;
+        }
+
         if (value) {
             searchParams.set(param, value);
         }
@@ -41,13 +51,13 @@ export default function Listings() {
                             <div className="col-span-1">
                                 <div>
                                     <label className="inline-flex items-center">
-                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionCar(e.target.checked); updateSearch('car', e.target.checked); }} checked={optionCar} />
+                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionCar(e.target.checked); updateSearch(e); }} name="car" checked={optionCar} />
                                         <span className="ml-2">Cars</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label className="inline-flex items-center">
-                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionSuv(e.target.checked); updateSearch('suv', e.target.checked); }} checked={optionSuv} />
+                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionSuv(e.target.checked); updateSearch(e); }} name="suv" checked={optionSuv} />
                                         <span className="ml-2">SUVs</span>
                                     </label>
                                 </div>
@@ -55,13 +65,13 @@ export default function Listings() {
                             <div className="col-span-1">
                                 <div>
                                     <label className="inline-flex items-center">
-                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionTruck(e.target.checked); updateSearch('truck', e.target.checked); }} checked={optionTruck} />
+                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionTruck(e.target.checked); updateSearch(e); }} name="truck" checked={optionTruck} />
                                         <span className="ml-2">Trucks</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label className="inline-flex items-center">
-                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionOther(e.target.checked); updateSearch('other', e.target.checked); }} checked={optionOther} />
+                                        <input className="form-checkbox" type="checkbox" onChange={e => { setOptionOther(e.target.checked); updateSearch(e); }} name="other" checked={optionOther} />
                                         <span className="ml-2">Other</span>
                                     </label>
                                 </div>
@@ -73,11 +83,11 @@ export default function Listings() {
                     <div className="grid grid-cols-2 gap-2">
                         <label className="col-span-1 block">
                             <span className="text-slate-700 whitespace-nowrap">Year (min)</span>
-                            <input onChange={e => setInputYearMin(e.target.value)} onBlur={e => updateSearch('yearMin', e.target.value)} value={inputYearMin} min="1980" max="2030" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputYearMin(e.target.value)} name="yearMin" onBlur={updateSearch} onKeyDown={updateSearch} value={inputYearMin} min="1980" max="2030" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                         <label className="col-span-1 block">
                             <span className="text-slate-700">(max)</span>
-                            <input onChange={e => setInputYearMax(e.target.value)} onBlur={e => updateSearch('yearMax', e.target.value)} value={inputYearMax} min="1980" max="2030" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputYearMax(e.target.value)} name="yearMax" onBlur={updateSearch} onKeyDown={updateSearch} value={inputYearMax} min="1980" max="2030" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                     </div>
                 </div>
@@ -85,11 +95,11 @@ export default function Listings() {
                     <div className="grid grid-cols-2 gap-2">
                         <label className="col-span-1 block">
                             <span className="text-slate-700 whitespace-nowrap">Mileage (min)</span>
-                            <input onChange={e => setInputMileageMin(e.target.value)} onBlur={e => updateSearch('mileageMin', e.target.value)} value={inputMileageMin} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputMileageMin(e.target.value)} name="mileageMin" onBlur={updateSearch} onKeyDown={updateSearch} value={inputMileageMin} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                         <label className="col-span-1 block">
                             <span className="text-slate-700">(max)</span>
-                            <input onChange={e => setInputMileageMax(e.target.value)} onBlur={e => updateSearch('mileageMax', e.target.value)} value={inputMileageMax} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputMileageMax(e.target.value)} name="mileageMax" onBlur={updateSearch} onKeyDown={updateSearch} value={inputMileageMax} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                     </div>
                 </div>
@@ -97,18 +107,18 @@ export default function Listings() {
                     <div className="grid grid-cols-2 gap-2">
                         <label className="col-span-1 block">
                             <span className="text-slate-700 whitespace-nowrap">Price (min)</span>
-                            <input onChange={e => setInputPriceMin(e.target.value)} onBlur={e => updateSearch('priceMin', e.target.value)} value={inputPriceMin} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputPriceMin(e.target.value)} name="priceMin" onBlur={updateSearch} onKeyDown={updateSearch} value={inputPriceMin} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                         <label className="col-span-1 block">
                             <span className="text-slate-700">(max)</span>
-                            <input onChange={e => setInputPriceMax(e.target.value)} onBlur={e => updateSearch('priceMax', e.target.value)} value={inputPriceMax} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
+                            <input onChange={e => setInputPriceMax(e.target.value)} name="priceMax" onBlur={updateSearch} onKeyDown={updateSearch} value={inputPriceMax} min="0" max="250000" type="number" className="mt-0.5 form-input text-xs sm:text-sm md:text-base block w-full" />
                         </label>
                     </div>
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                     <label className="block">
                         <span className="text-slate-700 whitespace-nowrap">Sort by</span>
-                        <select onChange={e => { setOptionSort(e.target.value); updateSearch('sort', e.target.value); }} value={optionSort} className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
+                        <select onChange={e => { setOptionSort(e.target.value); updateSearch(e); }} name="sort" value={optionSort} className="mt-0.5 form-select text-xs sm:text-sm md:text-base block w-full">
                             <option></option>
                             <option value="-created">New ads first</option>
                             <option value="year">Year</option>
