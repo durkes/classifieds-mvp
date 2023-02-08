@@ -5,9 +5,38 @@ const router = express.Router();
 export default router;
 
 router.post('/listings', function (req, res, next) {
-    const filter = null;
     const sort = req.body.sort || null;
+    let types = [], filters = [];
 
+    if (req.body.car) {
+        types.push('type = "Car"');
+    }
+    if (req.body.truck) {
+        types.push('type = "Truck"');
+    }
+    if (req.body.suv) {
+        types.push('type = "SUV"');
+    }
+    if (req.body.other) {
+        types.push('type = "Other"');
+    }
+    if (types.length) {
+        filters.push('(' + types.join(' || ') + ')');
+    }
+
+    ['yearMin', 'yearMax', 'mileageMin', 'mileageMax', 'priceMin', 'priceMax'].forEach(param => {
+        if (!req.body[param]) {
+            return;
+        }
+
+        const paramLength = param.length;
+        const field = param.substring(0, paramLength - 3);
+        const operator = param.substring(paramLength - 3) === 'Min' ? ' >= ' : ' <= ';
+
+        filters.push(field + operator + req.body[param]);
+    });
+
+    const filter = filters.join(' && ');
     getListings({ sort: sort, filter: filter }, (error, records) => {
         if (error) {
             // unexpected error
