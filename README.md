@@ -4,13 +4,13 @@
 This online marketplace SPA web app allows users to buy and sell used cars locally.  A visitor can shop by price, mileage, year, and type of vehicle. Sellers can list their car details for potential buyers to see. The project could easily be modified for other types of products such as apartment/home rentals, etc.
 
 ### Technologies
- - Node.js w/ Express.js web server
+ - Node.js w/ Express.js web server for REST API calls and serving content
  - OAuth2 for Google/Twitter login or create an account
- - PocketBase SQLite for the database
+ - PocketBase SQLite database solution
  - Vite for React w/ Tailwind CSS for building the frontend
- - React Query + Axios for API calls
+ - React Query + Axios for frontend API calls
  - JavaScirpt, JSX, HTML, CSS, Sass, SQL
- - Deploy to CentOS behind Cloudflare
+ - Deployed to CentOS behind Cloudflare
 
 ### Features
 - User login: Users can create an account, log in, and change their password (or sign in w/ Google, Twitter)
